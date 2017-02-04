@@ -1,0 +1,11 @@
+{
+  "name": {
+    "en": "Noto Sans CJK KR",
+    "ko": "노토 산스 CJK KR"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "https://www.google.com/get/noto/help/cjk/",
+    "text": "SIL Open Font License 1.1"
+  }
+}

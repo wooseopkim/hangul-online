@@ -1,0 +1,11 @@
+{
+  "name": {
+    "en": "DungGeunMo",
+    "ko": "둥근모꼴"
+  },
+  "fallback": "monospace",
+  "license": {
+    "url": "http://cactus.tistory.com/193",
+    "text": "Public Domain CC0"
+  }
+}

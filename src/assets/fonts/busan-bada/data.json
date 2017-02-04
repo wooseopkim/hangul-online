@@ -1,0 +1,11 @@
+{
+  "name": {
+    "en": "Busan Bada",
+    "ko": "부산바다"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "http://www.busanbadattf.com/---",
+    "text": "SIL Open Font License 1.1"
+  }
+}

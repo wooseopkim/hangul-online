@@ -1,0 +1,11 @@
+{
+  "name": {
+    "en": "Spoqa Han Sans",
+    "ko": "스포카 한 산스"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "https://github.com/spoqa/spoqa-han-sans/blob/master/LICENSE",
+    "text": "SIL Open Font License 1.1"
+  }
+}

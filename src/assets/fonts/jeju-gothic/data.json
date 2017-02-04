@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Jeju Gothic",
+    "ko": "제주고딕"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "https://www.jeju.go.kr/jeju/symbol/font/infor.htm"
+  }
+}

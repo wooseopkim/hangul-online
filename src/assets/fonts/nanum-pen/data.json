@@ -1,0 +1,11 @@
+{
+  "name": {
+    "en": "Nanum Pen",
+    "ko": "나눔손글씨 펜"
+  },
+  "fallback": "cursive",
+  "license": {
+    "url": "http://help.naver.com/ops/step2/faq.nhn?faqId=15879",
+    "text": "SIL Open Font License 1.1"
+  }
+}

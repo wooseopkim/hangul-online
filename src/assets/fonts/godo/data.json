@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Godo",
+    "ko": "고도"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "https://www.godo.co.kr/company/godofont.php"
+  }
+}

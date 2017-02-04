@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Hankyoreh Gyeol",
+    "ko": "한겨레 결"
+  },
+  "fallback": "serif",
+  "license": {
+    "url": "http://nuri.hani.co.kr/hanisite/dev/board/listbody.html?h_gcode=board&h_code=91&po_no=11411"
+  }
+}

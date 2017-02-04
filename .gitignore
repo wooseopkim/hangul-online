@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+
+# Dynamically generated
+*.bundle.js
+static/data.json
+static/css/*
+static/fonts/*
+src/assets/css/fonts.css
+src/assets/fonts/data.json
+!*.gitkeep

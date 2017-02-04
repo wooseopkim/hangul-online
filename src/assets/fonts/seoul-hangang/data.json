@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Seoul Hangang",
+    "ko": "서울 한강"
+  },
+  "fallback": "serif",
+  "license": {
+    "url": "http://www.seoul.go.kr/v2012/seoul/symbol/font.html"
+  }
+}
