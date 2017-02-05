@@ -36,9 +36,9 @@
       <span class="indicator">{{ (fontSize < 10 ? '0' : '') + fontSize }}px</span>
       <input type="range" min="12" max="48" :value="fontSize" @input="inputChange">
     </div>
-    <div contenteditable="true" class="editable" :class="editableClass" :style="editableStyle">
-      &nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.
-    </div>
+    <div contenteditable="true" class="editable" :class="editableClass" :style="editableStyle">{{
+      this.fontEnabled ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.' : ''
+    }}</div>
   </section>
 </template>
 
@@ -55,6 +55,8 @@ const kb = 1000 * byte
 const mb = 1000 * kb
 const bytesToMegaBytes = (bytes, digits) => parseInt(bytes / mb * (10 ** digits), 10) / (10 ** digits) + 'MB'
 
+const timeout = 10 * 1000
+
 export default {
   props: ['model', 'toggle'],
   data () {
@@ -69,7 +71,8 @@ export default {
       types: typefaces,
       selectedFont: typefaces.find(typeface => typeface.weight === 400) || typefaces[0],
       fontSize: initialSize,
-      shown: false,
+      fontEnabled: false,
+      fontFailed: false,
       dropdownActive: false
     }
   },
@@ -81,8 +84,12 @@ export default {
       }
     },
     editableClass () {
+      const fontEnabled = this.fontEnabled
+      const fontFailed = this.fontFailed
       return {
-        [this.slug]: this.shown
+        [this.slug]: fontEnabled,
+        loading: !fontEnabled && !fontFailed,
+        failed: fontFailed
       }
     },
     dropdownClass () {
@@ -139,9 +146,9 @@ export default {
       })
     })
     inView(`#${this.id} .editable`).once('enter', () => {
-      const enable = () => { this.shown = true }
-      const enableAnyway = () => setTimeout(enable, 0)
-      new FontFaceObserver(this.model.name.en).load().then(enable, enableAnyway)
+      const enable = () => { this.fontEnabled = true }
+      const fail = () => { this.fontFailed = true }
+      new FontFaceObserver(this.model.name.en).load(null, timeout).then(enable, fail)
     })
   }
 }
@@ -165,7 +172,7 @@ export default {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 360px) {
   .font-card {
     margin-left: 2rem;
     margin-right: 2rem;
@@ -292,6 +299,24 @@ export default {
   width: 100%;
   margin-top: 0.5em;
   text-align: justify;
+}
+
+.font-card .editable.loading {
+  user-select: none;
+  opacity: 0.3;
+}
+
+.font-card .editable.loading::after {
+  content: '다운로드 중'
+}
+
+.font-card .editable.failed {
+  user-select: none;
+  color: red;
+}
+
+.font-card .editable.failed::after {
+  content: '다운로드 실패'
 }
 
 .font-card .controls {

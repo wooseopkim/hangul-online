@@ -72,6 +72,10 @@ observer.load().then(function () {
   font-size: 1.1em;
 }
 
+.tab-usage pre {
+  white-space: pre-wrap;
+}
+
 .tab-usage code {
   font-family: 'D2Coding', monospace;
   padding-left: 0.25rem;
