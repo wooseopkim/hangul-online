@@ -261,6 +261,13 @@ export default {
   padding-bottom: 4rem;
 }
 
+@media (max-width: 640px) {
+  .tab .tab-content > * {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 .tab .tab-switch:checked ~ .tab-title {
   border-bottom: 0.2rem solid #BE3DFF;
   font-weight: 700;

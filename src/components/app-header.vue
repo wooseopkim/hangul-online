@@ -32,7 +32,7 @@ export default {
   user-select: none;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 810px) {
   .masthead {
     position: relative;
     width: 100%;
@@ -87,8 +87,18 @@ export default {
   align-items: flex-end;
 }
 
+@media (max-width: 810px) {
+  .masthead > p {
+    margin-bottom: 0;
+  }
+
+  .masthead > p:last-child {
+    margin-bottom: 5%;
+  }
+}
+
 @media (max-width: 480px) {
-  .masthead > p, .masthead > p:last-child {
+  .masthead > p:last-child {
     margin-bottom: 0;
   }
 }

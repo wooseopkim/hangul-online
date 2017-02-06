@@ -25,6 +25,12 @@ export default {
 </script>
 
 <style>
+@media (min-width: 1024px) {
+  .tab-css {
+    margin: 0 2rem;
+  }
+}
+
 .tab-css .code {
   font-family: 'D2Coding', monospace;
   white-space: pre-wrap;

@@ -172,7 +172,7 @@ export default {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 810px) {
   .font-card {
     margin-left: 2rem;
     margin-right: 2rem;

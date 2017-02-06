@@ -37,7 +37,7 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 810px) {
   .content {
     margin-left: initial;
     width: 100%;
