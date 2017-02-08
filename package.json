@@ -5,7 +5,7 @@
   "author": "Wooseop Kim",
   "private": true,
   "scripts": {
-    "clean": "git stash && git clean -dfx -e node_modules",
+    "clean": "git clean -dfx -e node_modules",
     "build-data": "(cd src/lib/build && webpack --config build-data.webpack.config.js && node build-data.bundle.js)",
     "copy-static": "(cd src/lib/build && webpack --config copy-static.webpack.config.js && node copy-static.bundle.js)",
     "prepare": "npm run clean && npm run build-data && npm run copy-static",

@@ -1,6 +1,6 @@
 <template>
   <div class="modal-wrapper">
-    <input id="modal-switch" type="checkbox">
+    <input id="modal-switch" type="checkbox" @change="onModalChange($event)">
     <div class="modal-container">
       <label for="modal-switch" class="background"></label>
       <div class="modal">
@@ -12,14 +12,14 @@
                 type="radio"
                 name="tabs"
                 :checked="index === initialTab"
-                @change="setCurrent(index)"
+                @change="setCurrentIndex(index)"
             >
-            <div class="tab-content">
-              <component :is="tab.component" :meta="tab.meta"></component>
-            </div>
             <label :for="tab.component.name" class="tab-title">{{ tab.component.title }}</label>
           </li>
         </ul>
+        <div class="tab-content">
+          <component v-for="tab in tabs" :is="tab.component" :meta="tab.meta"></component>
+        </div>
       </div>
       <div class="fab-container" v-show="hasCode">
         <button class="fab" @click="copyCSS">
@@ -61,7 +61,7 @@ export default {
     return {
       tabs,
       initialTab,
-      current: null
+      currentIndex: 0
     }
   },
   computed: {
@@ -70,15 +70,27 @@ export default {
     }
   },
   methods: {
-    setCurrent (index) {
-      this.current = index
+    onModalChange (e) {
+      const on = e.target.checked
+      document.body.style.overflow = on ? 'hidden' : 'initial'
+    },
+    setCurrentIndex (index) {
+      const tabs = this.$el.querySelectorAll('.tab-content > *')
+      const previousTab = tabs[this.currentIndex]
+
+      this.currentIndex = index
+
+      const currentTab = tabs[this.currentIndex]
+
+      previousTab.classList.remove('current')
+      currentTab.classList.add('current')
     },
     copyCSS () {
       const tabs = this.tabs
       const cssTab = tabs.findIndex(tab => tab.component === TabCSS)
-      if (this.current !== cssTab) {
+      if (this.currentIndex !== cssTab) {
         document.getElementById(tabs[cssTab].component.name).checked = true
-        this.setCurrent(cssTab)
+        this.setCurrentIndex(cssTab)
       }
       const selection = window.getSelection()
       const range = document.createRange()
@@ -90,7 +102,7 @@ export default {
     }
   },
   mounted () {
-    this.setCurrent(this.initialTab)
+    this.setCurrentIndex(this.initialTab)
     const modalSwitch = document.getElementById('modal-switch')
     document.addEventListener('keyup', e => {
       const code = e.keyCode || e.which
@@ -108,6 +120,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: auto;
   padding-top: 5%;
   padding-left: 10%;
   padding-right: 10%;
@@ -186,14 +199,6 @@ export default {
   opacity: 0;
 }
 
-.modal {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  overflow: auto;
-}
-
 @media (min-width: 1024px) {
   .modal {
     max-width: 80rem;
@@ -209,11 +214,12 @@ export default {
 }
 
 #modal-switch:checked ~ .modal-container .background {
-  position: absolute;
-  top: 0;
+  position: fixed;
   left: 0;
   right: 0;
+  top: 0;
   bottom: 0;
+  z-index: -1;
 }
 
 .modal-container,
@@ -233,11 +239,11 @@ export default {
   flex-direction: column-reverse;
 }
 
-.tab > .tab-switch {
+.tab-switch {
   display: none;
 }
 
-.tab .tab-title {
+.tab-title {
   cursor: pointer;
   user-select: none;
   display: block;
@@ -249,41 +255,37 @@ export default {
   transition: opacity 0.2s;
 }
 
-.tab .tab-switch + .tab-content {
-  flex: 1;
-  word-break: break-all;
+.tab-content > * {
+  padding-top: 1.35rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 2.5rem;
   transition: opacity 0.5s;
 }
 
-.tab .tab-content > * {
-  position: absolute;
-  left: 0;
-  right: 0;
-  padding-top: 3rem;
-  padding-left: 4rem;
-  padding-right: 4rem;
-  padding-bottom: 4rem;
+.tab-content > *:not(.current),
+.tab-content > *:not(.current) * {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  padding: 0;
+  margin: 0;
 }
 
 @media (max-width: 640px) {
-  .tab .tab-content > * {
+  .tab-content > * {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
-.tab .tab-switch:checked ~ .tab-title {
+.tab-switch:checked ~ .tab-title {
   border-bottom: 0.2rem solid #BE3DFF;
   font-weight: 700;
 }
 
-.tab .tab-switch:not(:checked) ~ .tab-title {
+.tab-switch:not(:checked) ~ .tab-title {
   border-bottom: 0.2rem solid transparent;
   opacity: 0.3;
-}
-
-.tab > .tab-switch:not(:checked) + .tab-content {
-  opacity: 0;
-  visibility: hidden;
 }
 </style>

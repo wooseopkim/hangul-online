@@ -88,8 +88,15 @@ observer.load(null, timeout).then(function () {
 }
 
 .tab-usage pre, blockquote {
-  margin: 0.2rem -2rem;
+  margin: 0.2rem 0rem;
   padding: 0.5rem 1rem;
+}
+
+@media (max-width: 640px) {
+  .tab-usage pre, blockquote {
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
 }
 
 .tab-usage ol > li {
