@@ -36,7 +36,11 @@ import {generateCSS} from '../lib/stylesheet'
 import TabCSS from './tab-css'
 import TabUsage from './tab-usage'
 
-const hostURL = 'https://hangul.online'
+const location = window.location
+const host = location.hostname
+const port = location.port
+let hostURL = '//'
+hostURL += port ? `${host}:${port}` : host
 
 export default {
   props: ['store', 'event-bus'],

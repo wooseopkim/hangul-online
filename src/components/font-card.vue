@@ -34,9 +34,9 @@
       <span class="opacity" style="opacity: 0.7;">가</span>
       <span class="opacity" style="opacity: 0.3;">가</span>
       <span class="indicator">{{ (fontSize < 10 ? '0' : '') + fontSize }}px</span>
-      <input type="range" min="12" max="48" :value="fontSize" @input="inputChange">
+      <input type="range" min="12" max="48" :value="fontSize" @input="inputChange" disabled="!fontEnabled">
     </div>
-    <div contenteditable="true" class="editable" :class="editableClass" :style="editableStyle">{{
+    <div :contenteditable="editable" class="editable" :class="editableClass" :style="editableStyle" @click="reload">{{
       this.fontEnabled ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.' : ''
     }}</div>
   </section>
@@ -77,10 +77,14 @@ export default {
     }
   },
   computed: {
+    editable () {
+      return this.fontEnabled && !this.fontFailed
+    },
     editableStyle () {
       return {
         fontSize: this.fontSize + unit,
-        fontWeight: this.fontWeight
+        fontWeight: this.fontWeight,
+        cursor: this.fontFailed ? 'pointer' : 'initial'
       }
     },
     editableClass () {
@@ -119,6 +123,16 @@ export default {
     },
     inputChange (e) {
       this.fontSize = e.target.value
+    },
+    loadFont () {
+      const enable = () => { this.fontEnabled = true }
+      const fail = () => { this.fontFailed = true }
+      const opts = { weight: this.fontWeight }
+      new FontFaceObserver(this.model.name.en, opts).load(null, timeout).then(enable, fail)
+    },
+    reload (e) {
+      if (!this.fontFailed) return
+      this.loadFont()
     }
   },
   mounted () {
@@ -145,11 +159,7 @@ export default {
         })
       })
     })
-    inView(`#${this.id} .editable`).once('enter', () => {
-      const enable = () => { this.fontEnabled = true }
-      const fail = () => { this.fontFailed = true }
-      new FontFaceObserver(this.model.name.en).load(null, timeout).then(enable, fail)
-    })
+    inView(`#${this.id} .editable`).once('enter', () => this.loadFont())
   }
 }
 </script>
@@ -316,7 +326,7 @@ export default {
 }
 
 .font-card .editable.failed::after {
-  content: '다운로드 실패'
+  content: '다운로드 실패: 클릭하여 재시도'
 }
 
 .font-card .controls {
