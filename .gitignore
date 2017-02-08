@@ -1,6 +1,6 @@
 .DS_Store
 node_modules/
-dist/
+dist/*
 *.log
 
 # Dynamically generated
@@ -10,4 +10,6 @@ static/css/*
 static/fonts/*
 src/assets/css/fonts.css
 src/assets/fonts/data.json
+
+# Keep .gitkeep files
 !*.gitkeep

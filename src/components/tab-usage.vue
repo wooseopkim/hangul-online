@@ -48,12 +48,12 @@ var FontFaceObserver = require('fontfaceobserver')
 // font-family 속성에 있는 것을 사용해야 함
 var observer = new FontFaceObserver('글꼴 이름')
 
-observer.load().then(function () {
+// 10초 이내 다운로드하지 못할 경우 실패로 간주
+var timeout = 10 * 1000
+observer.load(null, timeout).then(function () {
   console.log('시간 안에 로딩 완료')
 }, function () {
   console.log('시간 안에 로딩하지 못함')
-  // 주의: 한글 글꼴 파일은 용량이 크기 때문에
-  // 이 경우에도 성공한 경우와 동일하게 처리함
 })
 \`\`\``,
 
@@ -88,7 +88,7 @@ observer.load().then(function () {
 }
 
 .tab-usage pre, blockquote {
-  margin: 0.2rem 0;
+  margin: 0.2rem -2rem;
   padding: 0.5rem 1rem;
 }
 

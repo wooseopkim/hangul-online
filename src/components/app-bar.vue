@@ -37,8 +37,18 @@ export default {
   margin-right: 1em;
 }
 
-.appbar *:last-child {
+.appbar i {
   cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .appbar {
+    justify-content: center;
+  }
+
+  .appbar .text {
+    flex: none;
+  }
 }
 
 @media (min-width: 1024px) {

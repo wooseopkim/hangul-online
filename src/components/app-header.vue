@@ -2,7 +2,7 @@
   <header class="masthead">
     <h1>한글<br>온라인</h1>
     <p>세상의 모든 한글 글꼴</p>
-    <p id="copyright">(C) Wooseop Kim {{ period }}</p>
+    <p id="copyright">(C) <a href="https://blog.wooseop.kim/">Wooseop Kim</a> {{ period }}</p>
   </header>
 </template>
 
@@ -101,5 +101,15 @@ export default {
   .masthead > p:last-child {
     margin-bottom: 0;
   }
+}
+
+.masthead #copyright {
+  white-space: pre;
+}
+
+.masthead a {
+  text-decoration: none;
+  color: initial;
+  border-bottom: 1px dotted;
 }
 </style>
