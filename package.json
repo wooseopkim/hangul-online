@@ -11,6 +11,7 @@
     "prepare": "npm run clean && npm run build-data && npm run copy-static",
     "dev": "npm run prepare && node build/dev-server.js",
     "build": "npm run prepare && node build/build.js",
+    "serve": "npm run build && firebase serve",
     "deploy": "npm run build && firebase deploy",
     "lint": "eslint --ext .js,.vue src"
   },
@@ -54,7 +55,6 @@
     "ncp": "^2.0.0",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
-    "prerender-spa-plugin": "^2.0.1",
     "semver": "^5.3.0",
     "shelljs": "^0.7.4",
     "url-loader": "^0.5.7",

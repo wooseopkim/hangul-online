@@ -1,6 +1,6 @@
 <template>
   <section :id="id" class="font-card">
-    <!-- FIXME Clarity `dropdownActive` flow-->
+    <!-- FIXME Clarify `dropdownActive` flow-->
     <!-- TODO Split into smaller components? -->
     <div class="header" @mouseleave="dropdownActive = false">
       <span
@@ -14,7 +14,12 @@
         :class="dropdownClass"
         @mouseleave="dropdownActive = false"
       >
-        <li class="weight" v-for="type in types" @click="weightClick">{{ type.weight }}<span class="ext">{{ ext(type.path).toUpperCase() }}</span></li>
+        <li class="weight" v-for="type in types" @click="weightClick">{{
+            type.weight
+          }}<span class="ext">{{
+            ext(type.path).toUpperCase()
+          }}</span>
+        </li>
       </ul>
       <span class="icons">
         <a v-if="licenseURL" :href="licenseURL">
@@ -30,13 +35,26 @@
       </span>
     </div>
     <div class="controls">
-      <span class="opacity" style="opacity: 1.0;">가</span>
-      <span class="opacity" style="opacity: 0.7;">가</span>
-      <span class="opacity" style="opacity: 0.3;">가</span>
+      <span class="opacity"
+        v-for="opacity in opacities"
+        :style="{opacity: opacity}"
+        @click="opacityClick">가</span>
       <span class="indicator">{{ (fontSize < 10 ? '0' : '') + fontSize }}px</span>
-      <input type="range" min="12" max="48" :value="fontSize" @input="inputChange" disabled="!fontEnabled">
+      <input
+        type="range"
+        min="12"
+        max="48"
+        :value="fontSize"
+        @input="inputChange"
+        disabled="!fontEnabled">
     </div>
-    <div :contenteditable="editable" class="editable" :class="editableClass" :style="editableStyle" @click="reload">{{
+    <div
+      :contenteditable="editable"
+      class="editable"
+      :class="editableClass"
+      :style="editableStyle"
+      @click="reload"
+    >{{
       this.fontEnabled ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.' : ''
     }}</div>
   </section>
@@ -74,7 +92,8 @@ export default {
       fontSize: initialSize,
       fontEnabled: false,
       fontFailed: false,
-      dropdownActive: false
+      dropdownActive: false,
+      opacities: [1.0, 0.7, 0.3]
     }
   },
   computed: {
@@ -147,17 +166,15 @@ export default {
             typeface.path.toLowerCase().endsWith(format.toLowerCase())
       })
       this.reload()
+    },
+    opacityClick (e) {
+      const el = this.$el
+      const editable = el.getElementsByClassName('editable')[0]
+      const alpha = e.target.style.opacity
+      editable.style.color = `rgba(0, 0, 0, ${alpha})`
     }
   },
   mounted () {
-    const el = this.$el
-    const editable = el.getElementsByClassName('editable')[0]
-    Array.prototype.forEach.call(el.getElementsByClassName('opacity'), x => {
-      x.addEventListener('click', e => {
-        const alpha = e.target.style.opacity
-        editable.style.color = `rgba(0, 0, 0, ${alpha})`
-      })
-    })
     inView(`#${this.id} .editable`).once('enter', () => this.loadFont())
   }
 }
