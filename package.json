@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "clean": "git clean -dfx -e node_modules",
-    "build-data": "(cd src/lib/build && webpack --config build-data.webpack.config.js && node build-data.bundle.js)",
-    "copy-static": "(cd src/lib/build && webpack --config copy-static.webpack.config.js && node copy-static.bundle.js)",
+    "build-data": "(cd src/lib/build && babel-node build-data.js)",
+    "copy-static": "(cd src/lib/build && babel-node copy-static.js)",
     "prepare": "npm run clean && npm run build-data && npm run copy-static",
     "dev": "npm run prepare && node build/dev-server.js",
     "build": "npm run prepare && node build/build.js",

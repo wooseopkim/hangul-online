@@ -14,7 +14,7 @@
         :class="dropdownClass"
         @mouseleave="dropdownActive = false"
       >
-        <li class="weight" v-for="type in types">{{ type.weight }}<span class="ext">{{ ext(type.path).toUpperCase() }}</span></li>
+        <li class="weight" v-for="type in types" @click="weightClick">{{ type.weight }}<span class="ext">{{ ext(type.path).toUpperCase() }}</span></li>
       </ul>
       <span class="icons">
         <a v-if="licenseURL" :href="licenseURL">
@@ -55,7 +55,8 @@ const kb = 1000 * byte
 const mb = 1000 * kb
 const bytesToMegaBytes = (bytes, digits) => parseInt(bytes / mb * (10 ** digits), 10) / (10 ** digits) + 'MB'
 
-const timeout = 10 * 1000
+const timeout = 30 * 1000
+const delay = 1 * 1000
 
 export default {
   props: ['model', 'toggle'],
@@ -125,7 +126,6 @@ export default {
       this.fontSize = e.target.value
     },
     loadFont () {
-      this.fontFailed = false
       const enable = () => { this.fontEnabled = true }
       const fail = () => { this.fontFailed = true }
       const opts = {weight: this.fontWeight}
@@ -133,31 +133,29 @@ export default {
     },
     reload (e) {
       if (!this.fontFailed) return
-      this.loadFont()
+      this.fontEnabled = this.fontFailed = false
+      setTimeout(this.loadFont, delay)
+    },
+    weightClick (e) {
+      if (!this.dropdownActive) return
+      const target = e.target.classList.contains('ext') ? e.target.parentNode : e.target
+      const text = target.textContent
+      const weight = parseInt(text, 10)
+      const format = text.replace(weight.toString(), '')
+      this.selectedFont = this.types.find(typeface => {
+        return typeface.weight === weight &&
+            typeface.path.toLowerCase().endsWith(format.toLowerCase())
+      })
+      this.reload()
     }
   },
   mounted () {
     const el = this.$el
-    this.checkbox = el.getElementsByTagName('input')[0]
-    this.dropdown = el.getElementsByTagName('ul')[0]
     const editable = el.getElementsByClassName('editable')[0]
     Array.prototype.forEach.call(el.getElementsByClassName('opacity'), x => {
       x.addEventListener('click', e => {
         const alpha = e.target.style.opacity
         editable.style.color = `rgba(0, 0, 0, ${alpha})`
-      })
-    })
-    Array.prototype.forEach.call(el.getElementsByClassName('weight'), x => {
-      x.addEventListener('click', e => {
-        if (!this.dropdownActive) return
-        const target = e.target.classList.contains('ext') ? e.target.parentNode : e.target
-        const text = target.textContent
-        const weight = parseInt(text, 10)
-        const format = text.replace(weight.toString(), '')
-        this.selectedFont = this.types.find(typeface => {
-          return typeface.weight === weight &&
-              typeface.path.toLowerCase().endsWith(format.toLowerCase())
-        })
       })
     })
     inView(`#${this.id} .editable`).once('enter', () => this.loadFont())
@@ -312,22 +310,18 @@ export default {
   text-align: justify;
 }
 
-.font-card .editable.loading {
+.font-card .editable::after {
+  opacity: 0.5;
   user-select: none;
-  opacity: 0.3;
 }
 
 .font-card .editable.loading::after {
   content: '다운로드 중'
 }
 
-.font-card .editable.failed {
-  user-select: none;
-  color: red;
-}
-
 .font-card .editable.failed::after {
-  content: '다운로드 실패: 클릭하여 재시도'
+  content: '다운로드 실패: 클릭하여 재시도';
+  color: red;
 }
 
 .font-card .controls {
