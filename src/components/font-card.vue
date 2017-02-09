@@ -46,7 +46,7 @@
         max="48"
         :value="fontSize"
         @input="inputChange"
-        disabled="!fontEnabled">
+        :disabled="!fontEnabled">
     </div>
     <div
       :contenteditable="editable"
