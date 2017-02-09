@@ -125,9 +125,10 @@ export default {
       this.fontSize = e.target.value
     },
     loadFont () {
+      this.fontFailed = false
       const enable = () => { this.fontEnabled = true }
       const fail = () => { this.fontFailed = true }
-      const opts = { weight: this.fontWeight }
+      const opts = {weight: this.fontWeight}
       new FontFaceObserver(this.model.name.en, opts).load(null, timeout).then(enable, fail)
     },
     reload (e) {
