@@ -152,6 +152,7 @@ export default {
 }
 
 .modal-container .fab-container {
+  height: 0;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -170,6 +171,7 @@ export default {
   cursor: pointer;
   color: white;
   display: flex;
+  user-select: none;
 }
 
 .modal-container .fab > i {
@@ -214,7 +216,7 @@ export default {
 }
 
 #modal-switch:checked ~ .modal-container .background {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;

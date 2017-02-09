@@ -34,6 +34,7 @@ export default {
 .tab-css .code {
   font-family: 'D2Coding', monospace;
   white-space: pre-wrap;
+  word-break: break-all;
 }
 
 .tab-css .empty {

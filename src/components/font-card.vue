@@ -22,7 +22,7 @@
         </li>
       </ul>
       <span class="icons">
-        <a v-if="licenseURL" :href="licenseURL">
+        <a v-if="licenseURL" :href="licenseURL" target="_blank">
           <i class="material-icons">copyright</i>
         </a>
         <a :href="fontFilePath">
@@ -337,7 +337,7 @@ export default {
 }
 
 .font-card .editable.failed::after {
-  content: '다운로드 실패: 클릭하여 재시도';
+  content: '다운로드에 실패하였습니다. 네트워크 상태가 불량하거나, 지원하지 않는 운영체제 혹은 브라우저일 수 있습니다.';
   color: red;
 }
 
