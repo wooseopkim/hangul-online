@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Binggrae",
+    "ko": "빙그레"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "http://bingfont.co.kr/page/511"
+  }
+}

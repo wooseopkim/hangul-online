@@ -1,7 +1,7 @@
 <template>
   <header class="masthead">
     <h1>한글<br>온라인</h1>
-    <p>세상의 모든 한글 글꼴</p>
+    <p>너와 나의 한글 글꼴</p>
     <p id="copyright">(C) <a href="https://blog.wooseop.kim/">Wooseop Kim</a> {{ period }}</p>
   </header>
 </template>

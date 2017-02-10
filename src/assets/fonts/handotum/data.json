@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Handotum",
+    "ko": "한수원 한돋움"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "http://blog.khnp.co.kr/khnpfont"
+  }
+}

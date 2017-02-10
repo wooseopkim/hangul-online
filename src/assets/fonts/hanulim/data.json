@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Hanulim",
+    "ko": "한수원 한울림"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "http://blog.khnp.co.kr/khnpfont"
+  }
+}
