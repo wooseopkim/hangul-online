@@ -1,7 +1,12 @@
 {
   "hosting": {
     "public": "dist",
-    "ignore": ["data.json", ".gitkeep"],
+    "ignore": [
+      "**/.*",
+      "**/node_modules/**",
+      "src/",
+      "data.json"
+    ],
     "rewrites": [
       {
         "source": "**",
