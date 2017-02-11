@@ -36,6 +36,12 @@ export default {
       store: [],
       eventBus: new Vue()
     }
+  },
+  mounted () {
+    const outerLinkSelector = 'a[href]:not([href^="#"]):not([href^=javascript])'
+    document.querySelectorAll(outerLinkSelector).addEventListener('click', e => {
+      window.ga('send', 'event', 'Interaction', 'link', e.target.href)
+    })
   }
 }
 </script>

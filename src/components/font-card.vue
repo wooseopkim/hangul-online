@@ -146,7 +146,17 @@ export default {
     },
     loadFont () {
       const enable = () => { this.fontEnabled = true }
-      const fail = () => { this.fontFailed = true }
+      const fail = () => {
+        this.fontFailed = true
+        const exception = {
+          userAgent: window.navigator.userAgent,
+          fontId: this.slug
+        }
+        window.ga('send', 'exception', {
+          exDescription: `[font-loading-failed/${new Date().valueOf()}] ${JSON.stringify(exception)}`,
+          exFatal: false
+        })
+      }
       const opts = {weight: this.fontWeight}
       new FontFaceObserver(this.model.name.en, opts).load(null, timeout).then(enable, fail)
     },
@@ -175,7 +185,9 @@ export default {
     }
   },
   mounted () {
-    inView(`#${this.id} .editable`).once('enter', () => this.loadFont())
+    const id = this.id
+    inView(`#${id} .editable`).once('enter', () => this.loadFont())
+    inView(`#${id}`).on('enter', () => window.ga('send', 'screenview', id))
   }
 }
 </script>
