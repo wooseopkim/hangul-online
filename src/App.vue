@@ -39,8 +39,10 @@ export default {
   },
   mounted () {
     const outerLinkSelector = 'a[href]:not([href^="#"]):not([href^=javascript])'
-    document.querySelectorAll(outerLinkSelector).addEventListener('click', e => {
-      window.ga('send', 'event', 'Interaction', 'link', e.target.href)
+    Array.prototype.forEach.call(document.querySelectorAll(outerLinkSelector), link => {
+      link.addEventListener('click', e => {
+        window.ga('send', 'event', 'Interaction', 'link', e.target.href)
+      })
     })
   }
 }
