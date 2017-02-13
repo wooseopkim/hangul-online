@@ -5,7 +5,7 @@
   "author": "Wooseop Kim",
   "private": true,
   "scripts": {
-    "clean": "git clean -dfx -e node_modules",
+    "clean": "git add . && git clean -dfx -e node_modules",
     "build-data": "(cd src/lib/build && babel-node build-data.js)",
     "copy-static": "(cd src/lib/build && babel-node copy-static.js)",
     "prepare": "npm run clean && npm run build-data && npm run copy-static",
