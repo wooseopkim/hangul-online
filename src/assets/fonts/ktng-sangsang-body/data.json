@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "KT&G SangSang Body",
+    "ko": "KT&G 상상본문"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "http://www.ktng.com/sangsang?mode=DOWN"
+  }
+}

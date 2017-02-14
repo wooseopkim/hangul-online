@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "KBIZ Hanmaeum Gothic",
+    "ko": "KBIZ한마음 고딕"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "http://www.kbiz.or.kr/user/nd98015.do"
+  }
+}

@@ -81,7 +81,7 @@ export default {
   data () {
     const model = this.model
     const typefaces = model.typefaces.sort((a, b) => (a.weight - b.weight) || b.path.localeCompare(a.path))
-    const slug = this.model.name.en.toLowerCase().replace(/\s+/g, '-')
+    const slug = this.model.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-')
     return {
       id: `font-card-${slug}`,
       slug,

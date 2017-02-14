@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "EBS Hunminjeongum",
+    "ko": "EBS 훈민정음"
+  },
+  "fallback": "fantasy",
+  "license": {
+    "url": "http://about.ebs.co.kr/kor/notice/recsroom?tabVal=hunmin"
+  }
+}

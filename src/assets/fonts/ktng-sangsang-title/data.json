@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "KT&G SangSang Title",
+    "ko": "KT&G 상상제목"
+  },
+  "fallback": "sans-serif",
+  "license": {
+    "url": "http://www.ktng.com/sangsang?mode=DOWN"
+  }
+}

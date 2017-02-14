@@ -1,0 +1,10 @@
+{
+  "name": {
+    "en": "Samgukji 3",
+    "ko": "삼국지3"
+  },
+  "fallback": "serif",
+  "license": {
+    "url": "https://github.com/glizzy/fonts/blob/master/LICENSE.txt"
+  }
+}

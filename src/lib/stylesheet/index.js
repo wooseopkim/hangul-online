@@ -10,12 +10,12 @@ const format = path => {
   }[ext] || 'unknown'
 }
 
-const whitespaces = /\s+/g
+const nonletters = /[^a-z0-9]+/g
 const none = ''
 
 const generateCSS = (fontFamily, hostURL = '') => {
   const locals = Array.from(new Set([fontFamily.name.en, fontFamily.name.ko]
-      .map(x => [x, x.replace(whitespaces, none)])
+      .map(x => [x, x.replace(nonletters, none)])
       .reduce((a, b) => a.concat(b), [])))
       .map(x => `local('${x}')`)
       .join(', ')
@@ -59,7 +59,7 @@ const generateCSS = (fontFamily, hostURL = '') => {
 
 ${fontfaces}
 
-.${fontFamily.name.en.toLowerCase().replace(whitespaces, '-')} {
+.${fontFamily.name.en.toLowerCase().replace(nonletters, '-')} {
   font-family: '${fontFamily.name.en}', ${fontFamily.fallback};
 }
 
