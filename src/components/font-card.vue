@@ -145,17 +145,16 @@ export default {
       this.fontSize = e.target.value
     },
     loadFont () {
-      const enable = () => { this.fontEnabled = true }
+      const enable = () => {
+        this.fontEnabled = true
+      }
       const fail = () => {
         this.fontFailed = true
         const exception = {
           userAgent: window.navigator.userAgent,
           fontId: this.slug
         }
-        window.ga('send', 'exception', {
-          exDescription: `[font-loading-failed/${new Date().valueOf()}] ${JSON.stringify(exception)}`,
-          exFatal: false
-        })
+        window.ga('send', 'event', 'error', 'font-loading', JSON.stringify(exception))
       }
       const opts = {weight: this.fontWeight}
       new FontFaceObserver(this.model.name.en, opts).load(null, timeout).then(enable, fail)
