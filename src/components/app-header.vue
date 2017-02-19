@@ -2,6 +2,22 @@
   <header class="masthead">
     <h1>한글<br>온라인</h1>
     <p>너와 나의 한글 글꼴</p>
+    <ul class="social-buttons">
+      <li
+        v-for="socialButton in socialButtons"
+        class="social-button"
+        :style="{backgroundColor: socialButton.background}"
+      >
+        <a
+          :id="'social-button_' + socialButton.name.toLowerCase()"
+          class="symbol"
+          target="_blank"
+          :href="socialButton.url + location"
+          :style="{color: socialButton.color}">{{
+          socialButton.symbol 
+        }}</a>
+      </li>
+    </ul>
     <p id="copyright">(C) <a href="https://blog.wooseop.kim/">Wooseop Kim</a> {{ period }}</p>
   </header>
 </template>
@@ -13,7 +29,69 @@ const period = `${start}${start >= now ? '' : `-${now}`}`
 
 export default {
   data () {
-    return {period}
+    return {
+      period,
+      location: window.location.href && 'https://hangul.online',
+      socialButtons: [
+        {
+          name: 'Facebook',
+          symbol: 'f',
+          color: 'white',
+          background: 'darkblue',
+          url: 'https://www.facebook.com/sharer/sharer.php?u='
+        },
+        {
+          name: 'Kakao',
+          symbol: 'k',
+          color: 'saddlebrown',
+          background: 'gold',
+          url: 'https://story.kakao.com/share?url='
+        },
+        {
+          name: 'Twitter',
+          symbol: 't',
+          color: 'white',
+          background: 'dodgerblue',
+          url: 'https://twitter.com/intent/tweet?text=&url='
+        },
+        {
+          name: 'Naver',
+          symbol: 'N',
+          color: 'white',
+          background: 'lime',
+          url: 'http://blog.naver.com/openapi/share?url='
+        },
+        {
+          name: 'Google',
+          symbol: 'g',
+          color: 'white',
+          background: 'red',
+          url: 'https://plus.google.com/share?url='
+        }
+      ]
+    }
+  },
+  mounted () {
+    if (!/Android|iP([ao]d|hone)|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) return
+    const kakaoButton = document.getElementById('social-button_kakao')
+    console.log('setting up kakao link...')
+    kakaoButton.href = '#'
+    kakaoButton.target = ''
+    const Kakao = window.Kakao
+    Kakao.init('7c918b037e323f2d978a23d0d48488a5')
+    Kakao.Link.createTalkLinkButton({
+      container: kakaoButton,
+      label: document.title,
+      image: {
+        src: document.querySelector('meta[property="og:image"]').content,
+        width: 300,
+        height: 300
+      },
+      webButton: {
+        text: '열기',
+        url: window.location.href
+      }
+    })
   }
 }
 </script>
@@ -89,7 +167,7 @@ export default {
 
 @media (max-width: 810px) {
   .masthead > p {
-    margin-bottom: 0;
+    margin-bottom: 5%;
   }
 
   .masthead > p:last-child {
@@ -101,6 +179,25 @@ export default {
   .masthead > p:last-child {
     margin-bottom: 0;
   }
+}
+
+.masthead .social-buttons > .social-button {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+.masthead .social-button > .symbol {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  text-decoration: none;
+  border-bottom: none;
 }
 
 .masthead #copyright {
