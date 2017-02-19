@@ -31,41 +31,41 @@ export default {
   data () {
     return {
       period,
-      location: window.location.href && 'https://hangul.online',
+      location: window.location.href,
       socialButtons: [
         {
           name: 'Facebook',
-          symbol: 'f',
+          symbol: 'fb',
           color: 'white',
           background: 'darkblue',
           url: 'https://www.facebook.com/sharer/sharer.php?u='
         },
         {
           name: 'Kakao',
-          symbol: 'k',
+          symbol: 'ka',
           color: 'saddlebrown',
           background: 'gold',
           url: 'https://story.kakao.com/share?url='
         },
         {
           name: 'Twitter',
-          symbol: 't',
+          symbol: 'tw',
           color: 'white',
           background: 'dodgerblue',
           url: 'https://twitter.com/intent/tweet?text=&url='
         },
         {
           name: 'Naver',
-          symbol: 'N',
+          symbol: 'Nv',
           color: 'white',
-          background: 'lime',
+          background: 'limegreen',
           url: 'http://blog.naver.com/openapi/share?url='
         },
         {
           name: 'Google',
-          symbol: 'g',
+          symbol: 'gl',
           color: 'white',
-          background: 'red',
+          background: 'crimson',
           url: 'https://plus.google.com/share?url='
         }
       ]
@@ -183,10 +183,15 @@ export default {
 
 .masthead .social-buttons > .social-button {
   display: inline-block;
-  width: 2rem;
+  min-width: 2rem;
   height: 2rem;
   font-weight: lighter;
   cursor: pointer;
+  transition: 1s;
+}
+
+.masthead .social-buttons > .social-button:hover {
+  filter: brightness(135%) saturate(150%);
 }
 
 .masthead .social-button > .symbol {
@@ -195,7 +200,7 @@ export default {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  padding-right: 0.5rem;
+  padding-right: 0.2rem;
   text-decoration: none;
   border-bottom: none;
 }

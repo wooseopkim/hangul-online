@@ -185,18 +185,18 @@ export default {
   },
   mounted () {
     const id = this.id
-    inView(`#${id} .editable`).once('enter', () => this.loadFont())
-    inView(`#${id}`).on('enter', () => window.ga('send', 'screenview', id))
+    inView(`#${id} .header`).once('enter', () => this.loadFont())
+    inView(`#${id}`).on('enter', () => window.ga('send', 'event', 'Interaction', 'view', `#${id}`))
   }
 }
 </script>
 
 <style>
 .font-card {
-  margin-top: 2rem;
+  margin-top: 4rem;
   margin-left: 0rem;
   margin-right: 4rem;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   padding: 0 1rem;
   border-left: 1px solid;
   font-size: 1.2em;
@@ -217,11 +217,11 @@ export default {
 }
 
 .font-card:first-child {
-  margin-top: 4rem;
+  margin-top: 8rem;
 }
 
-.font-card:last-child {
-  margin-bottom: 4rem;
+.font-card:last-child > *:last-child {
+  margin-bottom: calc(100vh - 12rem);
 }
 
 .font-card .title::before {
