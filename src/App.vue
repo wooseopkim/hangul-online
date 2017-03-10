@@ -110,7 +110,6 @@ input[type=range]::-moz-range-thumb {
   border-radius: 1em;
   background: white;
   cursor: pointer;
-  transform: translateY(-50%);
 }
 
 input[type=range]::-ms-track {
