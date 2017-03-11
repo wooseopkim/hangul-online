@@ -10,7 +10,7 @@ const format = path => {
   }[ext] || 'unknown'
 }
 
-const nonletters = /[^a-z0-9]+/g
+const nonletters = /[^a-zA-Z0-9]+/g
 const none = ''
 
 const generateCSS = (fontFamily, hostURL = '') => {
