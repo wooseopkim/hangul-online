@@ -14,10 +14,10 @@
         :class="dropdownClass"
         @mouseleave="dropdownActive = false"
       >
-        <li class="weight" v-for="type in types" @click="weightClick">{{
-            type.weight
+        <li class="weight" v-for="t in types" @click="weightClick">{{
+            t.weight
           }}<span class="ext">{{
-            ext(type.path).toUpperCase()
+            ext(t.path).toUpperCase()
           }}</span>
         </li>
       </ul>
