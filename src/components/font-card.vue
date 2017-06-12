@@ -162,6 +162,8 @@ export default {
     reload (e) {
       if (!this.fontFailed) return
       this.fontEnabled = this.fontFailed = false
+      // if (css(this) in head) { head.remove(css(this) }
+      // head.append(css(this))
       setTimeout(this.loadFont, delay)
     },
     weightClick (e) {

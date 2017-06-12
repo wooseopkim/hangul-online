@@ -19,7 +19,10 @@ export default {
           ? this.store.splice(this.store.indexOf(item), 1)
           : this.store.push(item)
     }
-    return {fonts, toggle}
+    return {
+      fonts: fonts.sort((a, b) => a.name.ko.localeCompare(b.name.ko)),
+      toggle
+    }
   }
 }
 </script>
