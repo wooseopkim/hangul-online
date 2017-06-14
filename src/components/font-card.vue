@@ -102,7 +102,7 @@ export default {
     },
     editableStyle () {
       return {
-        fontSize: this.fontSize + unit,
+        fontSize: this.fontFailed ? '1rem' : this.fontSize + unit,
         fontWeight: this.fontWeight,
         cursor: this.fontFailed ? 'pointer' : 'initial'
       }
@@ -350,7 +350,7 @@ export default {
 }
 
 .font-card .editable.failed::after {
-  content: '다운로드에 실패하였습니다. 네트워크 상태가 불량하거나, 지원하지 않는 운영체제 혹은 브라우저일 수 있습니다.';
+  content: '다운로드에 실패하였습니다. 네트워크 상태가 불량하거나, 지원하지 않는 운영체제 혹은 브라우저일 수 있습니다. 이 상태가 반복될 경우 네트워크 상태를 확인하고 새로고침해 주세요. 메시지를 클릭하면 다시 시도합니다.';
   color: red;
 }
 
