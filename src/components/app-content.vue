@@ -1,6 +1,6 @@
 <template>
   <main class="content">
-    <font-card v-once v-for="font in fonts" :model="font" :toggle="toggle"></font-card>
+    <font-card v-once v-for="font in fonts" :model="font" :toggle="toggle" :key="font.name.en"></font-card>
   </main>
 </template>
 

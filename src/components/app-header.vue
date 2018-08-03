@@ -7,6 +7,7 @@
         v-for="socialButton in socialButtons"
         class="social-button"
         :style="{backgroundColor: socialButton.background}"
+        :key="socialButton.name"
       >
         <a
           :id="'social-button_' + socialButton.name.toLowerCase()"

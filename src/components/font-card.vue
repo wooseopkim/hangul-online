@@ -14,7 +14,7 @@
         :class="dropdownClass"
         @mouseleave="dropdownActive = false"
       >
-        <li class="weight" v-for="t in types" @click="weightClick">{{
+        <li class="weight" v-for="(t, index) in types" @click="weightClick" :key="index">{{
             t.weight
           }}<span class="ext">{{
             ext(t.path).toUpperCase()
@@ -38,7 +38,8 @@
       <span class="opacity"
         v-for="opacity in opacities"
         :style="{opacity: opacity}"
-        @click="opacityClick">가</span>
+        @click="opacityClick"
+        :key="opacity">가</span>
       <span class="indicator">{{ (fontSize < 10 ? '0' : '') + fontSize }}px</span>
       <input
         type="range"

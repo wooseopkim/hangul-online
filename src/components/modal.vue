@@ -5,7 +5,7 @@
       <label for="modal-switch" class="background"></label>
       <div class="modal">
         <ul class="tabs">
-          <li class="tab" v-for="(tab, index) in tabs">
+          <li class="tab" v-for="(tab, index) in tabs" :key="index">
             <input
                 :id="tab.component.name"
                 class="tab-switch"
@@ -18,7 +18,7 @@
           </li>
         </ul>
         <div class="tab-content">
-          <component v-for="tab in tabs" :is="tab.component" :meta="tab.meta"></component>
+          <component v-for="(tab, index) in tabs" :is="tab.component" :meta="tab.meta" :key="index"></component>
         </div>
       </div>
       <div class="fab-container" v-show="hasCode">

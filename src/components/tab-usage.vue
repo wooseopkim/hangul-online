@@ -1,7 +1,7 @@
 <template>
   <div class="tab-usage">
     <ol>
-      <li v-once v-for="step in steps" v-html="marked(step)"></li>
+      <li v-once v-for="(step, index) in steps" v-html="marked(step)" :key="index"></li>
     </ol>
   </div>
 </template>
