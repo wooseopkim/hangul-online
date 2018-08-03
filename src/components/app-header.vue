@@ -80,17 +80,17 @@ export default {
     kakaoButton.target = ''
     const Kakao = window.Kakao
     Kakao.init('7c918b037e323f2d978a23d0d48488a5')
-    Kakao.Link.createTalkLinkButton({
+    Kakao.Link.createDefaultButton({
       container: kakaoButton,
-      label: document.title,
-      image: {
-        src: document.querySelector('meta[property="og:image"]').content,
-        width: 300,
-        height: 300
-      },
-      webButton: {
-        text: '열기',
-        url: window.location.href
+      objectType: 'feed',
+      content: {
+        title: document.title,
+        description: document.querySelector('meta[property="og:description"]').content,
+        imageUrl: document.querySelector('meta[property="og:image"]').content,
+        link: {
+          mobileWebUrl: window.location.href,
+          webUrl: window.location.href
+        }
       }
     })
   }
