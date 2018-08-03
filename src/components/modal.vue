@@ -7,14 +7,14 @@
         <ul class="tabs">
           <li class="tab" v-for="(tab, index) in tabs" :key="index">
             <input
-                :id="tab.component.name"
+                :id="tab.component.title"
                 class="tab-switch"
                 type="radio"
                 name="tabs"
                 :checked="index === initialTab"
                 @change="setCurrentIndex(index)"
             >
-            <label :for="tab.component.name" class="tab-title">{{ tab.component.title }}</label>
+            <label :for="tab.component.title" class="tab-title">{{ tab.component.title }}</label>
           </li>
         </ul>
         <div class="tab-content">
