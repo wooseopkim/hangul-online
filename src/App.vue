@@ -50,7 +50,7 @@ export default {
     window.addEventListener('scroll', e => {
       if (lastScrollHeight === document.body.scrollHeight) {
         const topCard = Array.prototype.find.call(cards, card => window.scrollY < card.offsetTop)
-        window.history.pushState(null, null, `#${topCard.id}`)
+        window.history.pushState(null, null, `#!/${topCard.id}`)
       }
       lastScrollHeight = document.body.scrollHeight
     })
