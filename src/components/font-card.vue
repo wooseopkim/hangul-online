@@ -35,24 +35,6 @@
         </label>
       </span>
     </div>
-
-    <div class="controls">
-      <span class="opacity"
-        v-for="opacity in opacities"
-        :style="{opacity: opacity}"
-        @click="opacityClick"
-        :key="opacity"
-      >가</span>
-      <span class="indicator">{{ twoDigit(fontSize) }}px</span>
-      <input
-        type="range"
-        min="12"
-        max="48"
-        :value="fontSize"
-        @input="inputChange"
-        :disabled="!fontEnabled"
-      >
-    </div>
     <div
       :contenteditable="editable"
       class="editable"
@@ -106,12 +88,7 @@ export default {
       fontSize: initialSize,
       fontEnabled: false,
       fontFailed: false,
-      dropdownActive: false,
-      opacities: [
-        1.0,
-        0.7,
-        0.3
-      ]
+      dropdownActive: false
     }
   },
 
@@ -163,10 +140,6 @@ export default {
       return path.substring(path.lastIndexOf('.') + 1)
     },
 
-    inputChange (e) {
-      this.fontSize = e.target.value
-    },
-
     loadFont () {
       const enable = () => {
         this.fontEnabled = true
@@ -212,13 +185,6 @@ export default {
               typeface.path.toLowerCase().endsWith(format.toLowerCase())
         })
       this.reload()
-    },
-
-    opacityClick (e) {
-      const el = this.$el
-      const editable = el.getElementsByClassName('editable')[0]
-      const alpha = e.target.style.opacity
-      editable.style.color = `rgba(0, 0, 0, ${alpha})`
     },
 
     twoDigit (n) {
