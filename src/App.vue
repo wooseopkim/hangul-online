@@ -44,16 +44,6 @@ export default {
         window.ga('send', 'event', 'Interaction', 'link', e.target.href)
       })
     })
-
-    let lastScrollHeight = 0
-    const cards = document.getElementsByClassName('font-card')
-    window.addEventListener('scroll', e => {
-      if (lastScrollHeight === document.body.scrollHeight) {
-        const topCard = Array.prototype.find.call(cards, card => window.scrollY < card.offsetTop)
-        window.history.pushState(null, null, `#!/${topCard.id}`)
-      }
-      lastScrollHeight = document.body.scrollHeight
-    })
   }
 }
 </script>
