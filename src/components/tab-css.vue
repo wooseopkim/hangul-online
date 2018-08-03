@@ -12,11 +12,16 @@
 <script>
 export default {
   title: 'CSS',
-  props: ['meta'],
+
+  props: [
+    'meta'
+  ],
+
   computed: {
     hasCode () {
       return this.meta.hasCode()
     },
+
     code () {
       return this.meta.code()
     }

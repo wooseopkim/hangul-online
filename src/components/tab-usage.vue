@@ -1,7 +1,12 @@
 <template>
   <div class="tab-usage">
     <ol>
-      <li v-once v-for="(step, index) in steps" v-html="marked(step)" :key="index"></li>
+      <li
+        v-once
+        v-for="(step, index) in steps"
+        v-html="marked(step)"
+        :key="index"
+      />
     </ol>
   </div>
 </template>
@@ -9,15 +14,19 @@
 <script>
 import marked from 'marked'
 
-const m = marked
 export default {
   title: '사용법',
-  props: ['meta'],
+
+  props: [
+    'meta'
+  ],
+
   methods: {
     marked () {
-      return m.apply(m, arguments)
+      return marked.apply(marked, arguments)
     }
   },
+
   computed: {
     steps () {
       return [

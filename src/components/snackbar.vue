@@ -1,32 +1,37 @@
 <template>
-  <div class="snackbar" :class="snackbarClass">{{ msg }}</div>
+  <div class="snackbar" :class="{ shown }">{{ msg }}</div>
 </template>
 
 <script>
+const ttl = 2000
+
 export default {
-  props: ['event-bus'],
+  props: [
+    'event-bus'
+  ],
+
   data () {
     return {
       msg: 0,
       shown: false
     }
   },
-  computed: {
-    snackbarClass () {
-      return {
-        shown: this.shown
-      }
-    }
-  },
+
   methods: {
     show (msg) {
       const id = this.id
-      if (id) clearTimeout(id)
+      if (id) {
+        clearTimeout(id)
+      }
+
       this.shown = true
       this.msg = msg
-      this.id = setTimeout(() => { this.shown = false }, 2000)
+      this.id = setTimeout(() => {
+        this.shown = false
+      }, ttl)
     }
   },
+
   created () {
     this.eventBus.$on('snackbar', msg => this.show(msg))
   }

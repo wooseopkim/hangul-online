@@ -1,24 +1,25 @@
 <template>
   <section :id="id" class="font-card">
-    <!-- FIXME Clarify `dropdownActive` flow-->
-    <!-- TODO Split into smaller components? -->
     <div class="header" @mouseleave="dropdownActive = false">
       <span
         class="title"
         @mouseenter="dropdownActive = true"
       >{{ name }} {{ fontWeight }}</span>
+
       <span class="size" @mouseenter="dropdownActive = false">{{ fontFileSize }}</span>
       <div class="tooltip">현재 지정된 굵기를 나타내는 폰트의 용량입니다.</div>
+
       <ul
         class="dropdown"
-        :class="dropdownClass"
+        :class="{ active: dropdownActive }"
         @mouseleave="dropdownActive = false"
       >
-        <li class="weight" v-for="(t, index) in types" @click="weightClick" :key="index">{{
-            t.weight
-          }}<span class="ext">{{
-            ext(t.path).toUpperCase()
-          }}</span>
+        <li
+          class="weight"
+          v-for="(typeface, index) in typefaces"
+          @click="weightClick"
+          :key="index"
+        >{{ typeface.weight }}<span class="ext">{{ ext(typeface.path).toUpperCase() }}</span>
         </li>
       </ul>
       <span class="icons">
@@ -34,20 +35,23 @@
         </label>
       </span>
     </div>
+
     <div class="controls">
       <span class="opacity"
         v-for="opacity in opacities"
         :style="{opacity: opacity}"
         @click="opacityClick"
-        :key="opacity">가</span>
-      <span class="indicator">{{ (fontSize < 10 ? '0' : '') + fontSize }}px</span>
+        :key="opacity"
+      >가</span>
+      <span class="indicator">{{ twoDigit(fontSize) }}px</span>
       <input
         type="range"
         min="12"
         max="48"
         :value="fontSize"
         @input="inputChange"
-        :disabled="!fontEnabled">
+        :disabled="!fontEnabled"
+      >
     </div>
     <div
       :contenteditable="editable"
@@ -55,9 +59,7 @@
       :class="editableClass"
       :style="editableStyle"
       @click="reload"
-    >{{
-      this.fontEnabled ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.' : ''
-    }}</div>
+    >{{ this.fontEnabled ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.' : '' }}</div>
   </section>
 </template>
 
@@ -72,35 +74,52 @@ const initialWeight = 400
 const byte = 1
 const kb = 1000 * byte
 const mb = 1000 * kb
-const bytesToMegaBytes = (bytes, digits) => parseInt(bytes / mb * (10 ** digits), 10) / (10 ** digits) + 'MB'
+const bytesToMegaBytes = (bytes, digits) => {
+  return parseInt(bytes / mb * (10 ** digits), 10) / (10 ** digits) + 'MB'
+}
 
 const timeout = 30 * 1000
 const delay = 1 * 1000
 
 export default {
-  props: ['model', 'toggle'],
+  props: [
+    'model',
+    'toggle'
+  ],
+
   data () {
     const model = this.model
-    const typefaces = model.typefaces.sort((a, b) => (a.weight - b.weight) || b.path.localeCompare(a.path))
+    const typefaces = model.typefaces
+      .sort((a, b) => {
+        return (a.weight - b.weight) ||
+          b.path.localeCompare(a.path)
+      })
     const slug = this.model.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+
     return {
       id: `font-card-${slug}`,
       slug,
       name: model.name.ko,
       licenseURL: model.license.url,
-      types: typefaces,
+      typefaces,
       selectedFont: typefaces.find(typeface => typeface.weight === 400) || typefaces[0],
       fontSize: initialSize,
       fontEnabled: false,
       fontFailed: false,
       dropdownActive: false,
-      opacities: [1.0, 0.7, 0.3]
+      opacities: [
+        1.0,
+        0.7,
+        0.3
+      ]
     }
   },
+
   computed: {
     editable () {
       return this.fontEnabled && !this.fontFailed
     },
+
     editableStyle () {
       return {
         fontSize: this.fontFailed ? '1rem' : this.fontSize + unit,
@@ -108,6 +127,7 @@ export default {
         cursor: this.fontFailed ? 'pointer' : 'initial'
       }
     },
+
     editableClass () {
       const fontEnabled = this.fontEnabled
       const fontFailed = this.fontFailed
@@ -117,34 +137,36 @@ export default {
         failed: fontFailed
       }
     },
-    dropdownClass () {
-      return {
-        active: this.dropdownActive
-      }
-    },
+
     fontWeight () {
       return this.selectedFont ? this.selectedFont.weight : initialWeight
     },
+
     fontFileSize () {
       const sizeBytes = this.selectedFont.size
       const significantDigitCount = 1
       return bytesToMegaBytes(sizeBytes, significantDigitCount)
     },
+
     fontFileFormat () {
       return this.selectedFont ? this.ext(this.selectedFont.path) : null
     },
+
     fontFilePath () {
       const font = this.selectedFont
       return font ? `static/fonts/${font.path}` : null
     }
   },
+
   methods: {
     ext (path) {
       return path.substring(path.lastIndexOf('.') + 1)
     },
+
     inputChange (e) {
       this.fontSize = e.target.value
     },
+
     loadFont () {
       const enable = () => {
         this.fontEnabled = true
@@ -157,35 +179,53 @@ export default {
         }
         window.ga('send', 'event', 'error', 'font-loading', JSON.stringify(exception))
       }
-      const opts = {weight: this.fontWeight}
-      new FontFaceObserver(this.model.name.en, opts).load(null, timeout).then(enable, fail)
+
+      const opts = {
+        weight: this.fontWeight
+      }
+      new FontFaceObserver(this.model.name.en, opts)
+        .load(null, timeout)
+        .then(enable, fail)
     },
+
     reload (e) {
-      if (!this.fontFailed) return
+      if (!this.fontFailed) {
+        return
+      }
+
       this.fontEnabled = this.fontFailed = false
-      // if (css(this) in head) { head.remove(css(this) }
-      // head.append(css(this))
       setTimeout(this.loadFont, delay)
     },
+
     weightClick (e) {
-      if (!this.dropdownActive) return
+      if (!this.dropdownActive) {
+        return
+      }
+
       const target = e.target.classList.contains('ext') ? e.target.parentNode : e.target
       const text = target.textContent
       const weight = parseInt(text, 10)
       const format = text.replace(weight.toString(), '')
-      this.selectedFont = this.types.find(typeface => {
-        return typeface.weight === weight &&
-            typeface.path.toLowerCase().endsWith(format.toLowerCase())
-      })
+      this.selectedFont = this.typefaces
+        .find(typeface => {
+          return typeface.weight === weight &&
+              typeface.path.toLowerCase().endsWith(format.toLowerCase())
+        })
       this.reload()
     },
+
     opacityClick (e) {
       const el = this.$el
       const editable = el.getElementsByClassName('editable')[0]
       const alpha = e.target.style.opacity
       editable.style.color = `rgba(0, 0, 0, ${alpha})`
+    },
+
+    twoDigit (n) {
+      return `${n < 10 ? '0' : ''}${n}`
     }
   },
+
   mounted () {
     const id = this.id
     inView(`#${id} .header`).once('enter', () => this.loadFont())

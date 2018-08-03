@@ -2,23 +2,24 @@
   <header class="masthead">
     <h1>한글<br>온라인</h1>
     <p>너와 나의 한글 글꼴</p>
+
     <ul class="social-buttons">
       <li
         v-for="socialButton in socialButtons"
         class="social-button"
-        :style="{backgroundColor: socialButton.background}"
+        :style="{ backgroundColor: socialButton.background }"
         :key="socialButton.name"
       >
         <a
-          :id="'social-button_' + socialButton.name.toLowerCase()"
+          :id="`social-button_${socialButton.name.toLowerCase()}`"
           class="symbol"
           target="_blank"
           :href="socialButton.url + location"
-          :style="{color: socialButton.color}">{{
-          socialButton.symbol 
-        }}</a>
+          :style="{color: socialButton.color}"
+        >{{ socialButton.symbol  }}</a>
       </li>
     </ul>
+
     <p id="copyright">(C) <a href="https://blog.wooseop.kim/">Wooseop Kim</a> {{ period }}</p>
   </header>
 </template>
@@ -72,12 +73,16 @@ export default {
       ]
     }
   },
+
   mounted () {
-    if (!/Android|iP([ao]d|hone)|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) return
+    if (!/Android|iP([ao]d|hone)|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      return
+    }
+
     const kakaoButton = document.getElementById('social-button_kakao')
-    console.log('setting up kakao link...')
     kakaoButton.href = '#'
     kakaoButton.target = ''
+
     const Kakao = window.Kakao
     Kakao.init('7c918b037e323f2d978a23d0d48488a5')
     Kakao.Link.createDefaultButton({

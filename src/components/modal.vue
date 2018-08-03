@@ -17,10 +17,17 @@
             <label :for="tab.component.title" class="tab-title">{{ tab.component.title }}</label>
           </li>
         </ul>
+
         <div class="tab-content">
-          <component v-for="(tab, index) in tabs" :is="tab.component" :meta="tab.meta" :key="index"></component>
+          <component
+            v-for="(tab, index) in tabs"
+            :is="tab.component"
+            :meta="tab.meta"
+            :key="index"
+          />
         </div>
       </div>
+
       <div class="fab-container" v-show="hasCode">
         <button class="fab" @click="copyCSS">
           <i class="material-icons">content_copy</i>
@@ -31,51 +38,59 @@
 </template>
 
 <script>
-import {generateCSS} from '../lib/stylesheet'
+import { generateCSS } from '../lib/stylesheet'
 
 import TabCSS from './tab-css'
 import TabUsage from './tab-usage'
 
-const location = window.location
-const host = location.hostname
-const port = location.port
-let hostURL = '//'
-hostURL += port ? `${host}:${port}` : host
+const { hostname, port } = window.location
+const hostUrl = port ? `//${hostname}:${port}` : `//${hostname}`
 
 export default {
-  props: ['store', 'event-bus'],
+  props: [
+    'store',
+    'event-bus'
+  ],
+
   data () {
     const meta = {
       store: this.store,
-      code: () => this.store.map(item => generateCSS(item, hostURL)).join('\n\n'),
-      hasCode: () => this.store.length
+      code: () => this.store.map(item => generateCSS(item, hostUrl)).join('\n\n'),
+      hasCode: () => this.hasCode
     }
-    const tabs = [{
-      component: TabCSS,
-      meta
-    }, {
-      component: TabUsage,
-      meta
-    }]
-    const initialTab = 0
+
+    const tabs = [
+      {
+        component: TabCSS,
+        meta
+      },
+      {
+        component: TabUsage,
+        meta
+      }
+    ]
+
     return {
       tabs,
-      initialTab,
+      initialTab: 0,
       currentIndex: 0
     }
   },
+
   computed: {
     hasCode () {
       return this.store.length
     }
   },
+
   methods: {
     onModalChange (e) {
       const on = e.target.checked
       document.body.style.overflow = on ? 'hidden' : 'initial'
     },
+
     setCurrentIndex (index) {
-      const tabs = this.$el.querySelectorAll('.tab-content > *')
+      const tabs = document.querySelectorAll('.tab-content > *')
       const previousTab = tabs[this.currentIndex]
 
       this.currentIndex = index
@@ -85,6 +100,7 @@ export default {
       previousTab.classList.remove('current')
       currentTab.classList.add('current')
     },
+
     copyCSS () {
       const tabs = this.tabs
       const cssTab = tabs.findIndex(tab => tab.component === TabCSS)
@@ -92,22 +108,28 @@ export default {
         document.getElementById(tabs[cssTab].component.name).checked = true
         this.setCurrentIndex(cssTab)
       }
+
       const selection = window.getSelection()
       const range = document.createRange()
       range.selectNodeContents(this.$el.querySelector('.tab-css code'))
       selection.removeAllRanges()
       selection.addRange(range)
       document.execCommand('copy')
+
       this.eventBus.$emit('snackbar', '성공적으로 복사되었습니다.')
     }
   },
+
   mounted () {
     this.setCurrentIndex(this.initialTab)
-    const modalSwitch = document.getElementById('modal-switch')
+
     document.addEventListener('keyup', e => {
       const code = e.keyCode || e.which
-      if (code !== 8 && code !== 27) return
-      modalSwitch.checked = false
+      if (code !== 8 && code !== 27) {
+        return
+      }
+
+      document.getElementById('modal-switch').checked = false
     })
   }
 }

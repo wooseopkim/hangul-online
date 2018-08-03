@@ -1,6 +1,12 @@
 <template>
   <main class="content">
-    <font-card v-once v-for="font in fonts" :model="font" :toggle="toggle" :key="font.name.en"></font-card>
+    <font-card
+      v-once
+      v-for="font in fonts"
+      :model="font"
+      :toggle="toggle"
+      :key="font.name.en"
+    />
   </main>
 </template>
 
@@ -9,16 +15,21 @@ import fonts from '../assets/fonts/data.json'
 import FontCard from './font-card'
 
 export default {
-  props: ['store'],
+  props: [
+    'store'
+  ],
+
   components: {
     FontCard
   },
+
   data () {
     const toggle = (item) => {
       this.store.includes(item)
           ? this.store.splice(this.store.indexOf(item), 1)
           : this.store.push(item)
     }
+
     return {
       fonts: fonts.sort((a, b) => a.name.ko.localeCompare(b.name.ko)),
       toggle

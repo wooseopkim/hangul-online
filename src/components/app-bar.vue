@@ -9,7 +9,9 @@
 
 <script>
 export default {
-  props: ['store']
+  props: [
+    'store'
+  ]
 }
 </script>
 

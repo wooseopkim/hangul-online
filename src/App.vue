@@ -15,7 +15,9 @@ import FontFaceObserver from 'fontfaceobserver'
 const enable = () => document.body.classList.add('font-loaded')
 const enableAnyway = () => setTimeout(enable, 0)
 const timeout = 5000
-new FontFaceObserver('Spoqa Han Sans Subset').load(null, timeout).then(enable, enableAnyway)
+new FontFaceObserver('Spoqa Han Sans Subset')
+  .load(null, timeout)
+  .then(enable, enableAnyway)
 
 import AppHeader from './components/app-header'
 import AppContent from './components/app-content'
@@ -31,12 +33,14 @@ export default {
     Modal,
     Snackbar
   },
+
   data () {
     return {
       store: [],
       eventBus: new Vue()
     }
   },
+
   mounted () {
     const outerLinkSelector = 'a[href]:not([href^="#"]):not([href^=javascript])'
     Array.prototype.forEach.call(document.querySelectorAll(outerLinkSelector), link => {
