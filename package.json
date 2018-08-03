@@ -11,8 +11,6 @@
     "prepare": "npm run clean && npm run build-data && npm run copy-static",
     "dev": "npm run prepare && node build/dev-server.js",
     "build": "npm run prepare && node build/build.js",
-    "serve": "npm run build && firebase serve",
-    "deploy": "npm run build && firebase deploy",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
@@ -46,7 +44,6 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
-    "firebase-tools": "^3.2.1",
     "friendly-errors-webpack-plugin": "^1.1.2",
     "function-bind": "^1.0.2",
     "html-webpack-plugin": "^2.8.1",
