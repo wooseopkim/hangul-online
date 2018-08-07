@@ -326,6 +326,18 @@ export default {
   text-align: justify;
 }
 
+@media (max-width: 480px) {
+  .font-card .header .icons {
+    display: block;
+    float: initial;
+    margin-top: .5rem;
+  }
+
+  .font-card .editable {
+    margin-top: 0;
+  }
+}
+
 .font-card .editable::after {
   opacity: 0.5;
   user-select: none;
