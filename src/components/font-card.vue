@@ -33,7 +33,6 @@
       class="editable"
       :class="editableClass"
       :style="editableStyle"
-      @click="reload"
     >{{ this.fontEnabled ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.' : '' }}</div>
   </section>
 </template>
@@ -53,7 +52,7 @@ const bytesToMegaBytes = (bytes, digits) => {
   return parseInt(bytes / mb * (10 ** digits), 10) / (10 ** digits) + 'MB'
 }
 
-const timeout = 30 * 1000
+const timeout = 5 * 1000
 const delay = 1 * 1000
 
 export default {
@@ -79,31 +78,27 @@ export default {
       typefaces,
       selectedFont: typefaces.find(typeface => typeface.weight === 400) || typefaces[0],
       fontSize: initialSize,
-      fontEnabled: false,
-      fontFailed: false
+      fontEnabled: false
     }
   },
 
   computed: {
     editable () {
-      return this.fontEnabled && !this.fontFailed
+      return this.fontEnabled
     },
 
     editableStyle () {
       return {
-        fontSize: this.fontFailed ? '1rem' : this.fontSize + unit,
-        fontWeight: this.fontWeight,
-        cursor: this.fontFailed ? 'pointer' : 'initial'
+        fontSize: this.fontSize + unit,
+        fontWeight: this.fontWeight
       }
     },
 
     editableClass () {
       const fontEnabled = this.fontEnabled
-      const fontFailed = this.fontFailed
       return {
         [this.slug]: fontEnabled,
-        loading: !fontEnabled && !fontFailed,
-        failed: fontFailed
+        loading: !fontEnabled
       }
     },
 
@@ -136,13 +131,13 @@ export default {
       const enable = () => {
         this.fontEnabled = true
       }
-      const fail = () => {
-        this.fontFailed = true
+      const retry = () => {
         const exception = {
           userAgent: window.navigator.userAgent,
           fontId: this.slug
         }
         window.ga('send', 'event', 'error', 'font-loading', JSON.stringify(exception))
+        this.loadFont()
       }
 
       const opts = {
@@ -150,15 +145,11 @@ export default {
       }
       new FontFaceObserver(this.model.name.en, opts)
         .load(null, timeout)
-        .then(enable, fail)
+        .then(enable, retry)
     },
 
     reload (e) {
-      if (!this.fontFailed) {
-        return
-      }
-
-      this.fontEnabled = this.fontFailed = false
+      this.fontEnabled = false
       setTimeout(this.loadFont, delay)
     },
 
@@ -338,15 +329,25 @@ export default {
 .font-card .editable::after {
   opacity: 0.5;
   user-select: none;
+  font-weight: 400;
 }
 
 .font-card .editable.loading::after {
-  content: '다운로드 중'
+  content: '로딩 중';
+  animation: dots steps(1, end) 1.8s infinite;
+}
+
+@keyframes dots {
+  0%  { content: '로딩 중.'; }
+  33%  { content: '로딩 중..'; }
+  67%  { content: '로딩 중...'; }
+  100% { content: '로딩 중.'; }
 }
 
 .font-card .editable.failed::after {
-  content: '다운로드에 실패하였습니다. 네트워크 상태가 불량하거나, 지원하지 않는 운영체제 혹은 브라우저일 수 있습니다. 이 상태가 반복될 경우 네트워크 상태를 확인하고 새로고침해 주세요. 메시지를 클릭하면 다시 시도합니다.';
-  color: red;
+  content: '폰트를 불러오는 중입니다. 이 상태가 유지될 경우 네트워크 상태 또는 브라우저 버전을 확인해 주세요.';
+  color: #f75000;
+  font-weight: 900;
 }
 
 .font-card .controls {
