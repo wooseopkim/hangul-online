@@ -28,8 +28,14 @@
         </div>
       </div>
 
-      <div class="fab-container" v-show="hasCode">
-        <button class="fab" @click="copyCSS">
+      <div
+        class="fab-container"
+        v-show="hasCode"
+      >
+        <button
+          class="fab"
+          @click="copyCSS"
+        >
           <i class="material-icons">content_copy</i>
         </button>
       </div>

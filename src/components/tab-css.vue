@@ -1,7 +1,13 @@
 <template>
   <div class="tab-css">
-    <code v-if="hasCode" class="code">{{ code }}</code>
-    <div v-else class="empty">
+    <code
+      v-if="hasCode"
+      class="code"
+    >{{ code }}</code>
+    <div
+      v-else
+      class="empty"
+    >
       선택한 글꼴이 없습니다.<br>
       목록 오른쪽의 <i class="material-icons">add_circle_outline</i>를 눌러<br>
       사용할 글꼴을 선택해 보세요.

@@ -16,7 +16,11 @@
         </li>
       </ul>
       <span class="icons">
-        <a v-if="licenseURL" :href="licenseURL" target="_blank">
+        <a
+          v-if="licenseURL"
+          :href="licenseURL"
+          target="_blank"
+        >
           <i class="material-icons">copyright</i>
         </a>
         <a :href="fontFilePath">

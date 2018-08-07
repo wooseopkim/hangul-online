@@ -1,5 +1,8 @@
 <template>
-  <div class="snackbar" :class="{ shown }">{{ msg }}</div>
+  <div
+    class="snackbar"
+    :class="{ shown }"
+  >{{ msg }}</div>
 </template>
 
 <script>
