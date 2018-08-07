@@ -1,19 +1,12 @@
 <template>
   <section :id="id" class="font-card">
-    <div class="header" @mouseleave="dropdownActive = false">
-      <span
-        class="title"
-        @mouseenter="dropdownActive = true"
-      >{{ name }} {{ fontWeight }}</span>
+    <div class="header">
+      <span class="title">{{ name }} {{ fontWeight }}</span>
 
-      <span class="size" @mouseenter="dropdownActive = false">{{ fontFileSize }}</span>
+      <span class="size">{{ fontFileSize }}</span>
       <div class="tooltip">현재 지정된 굵기를 나타내는 폰트의 용량입니다.</div>
 
-      <ul
-        class="dropdown"
-        :class="{ active: dropdownActive }"
-        @mouseleave="dropdownActive = false"
-      >
+      <ul class="dropdown">
         <li
           class="weight"
           v-for="(typeface, index) in typefaces"
@@ -87,8 +80,7 @@ export default {
       selectedFont: typefaces.find(typeface => typeface.weight === 400) || typefaces[0],
       fontSize: initialSize,
       fontEnabled: false,
-      fontFailed: false,
-      dropdownActive: false
+      fontFailed: false
     }
   },
 
@@ -171,10 +163,6 @@ export default {
     },
 
     weightClick (e) {
-      if (!this.dropdownActive) {
-        return
-      }
-
       const target = e.target.classList.contains('ext') ? e.target.parentNode : e.target
       const text = target.textContent
       const weight = parseInt(text, 10)
@@ -250,16 +238,16 @@ export default {
   transition: opacity 0.1s 0.025s, transform 0.2s;
 }
 
-.font-card .header .dropdown:not(.active) {
+.font-card .header:not(:hover) .dropdown {
   opacity: 0;
   transform: scaleY(0);
 }
 
-.font-card .header .dropdown.active .weight {
+.font-card .header:hover .dropdown .weight {
   cursor: pointer;
 }
 
-.font-card .header .dropdown.active .weight .ext {
+.font-card .header:hover .dropdown .weight .ext {
   background: #704FFF;
   color: white;
   padding: 0.1rem 0.2rem;
@@ -280,7 +268,7 @@ export default {
   border-top: 1px solid lightgrey;
 }
 
-.font-card .header .dropdown:not(.active) > li {
+.font-card .header:not(:hover) .dropdown > li {
   transform: scale(0);
 }
 
