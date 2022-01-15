@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import marked from 'marked'
+import { parse } from 'marked'
 
 export default {
   title: '사용법',
@@ -23,7 +23,7 @@ export default {
 
   methods: {
     marked () {
-      return marked.apply(marked, arguments)
+      return parse(...arguments)
     }
   },
 
