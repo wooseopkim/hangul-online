@@ -22,7 +22,9 @@
     </ul>
 
     <p id="copyright">
-      (C) <a href="https://blog.wooseop.kim/">Wooseop Kim</a> {{ period }}
+      <span>(C)&nbsp;</span>
+      <a href="https://blog.wooseop.kim/">Wooseop Kim</a>
+      <span>&nbsp;{{ period }}</span>
     </p>
   </header>
 </template>
@@ -217,10 +219,6 @@ export default {
   padding-right: 0.2rem;
   text-decoration: none;
   border-bottom: none;
-}
-
-.masthead #copyright {
-  white-space: pre;
 }
 
 .masthead a {

@@ -319,6 +319,10 @@ export default {
   cursor: pointer;
 }
 
+.font-card .header .icons > *:not(:last-child) {
+  margin-right: 0.25rem;
+}
+
 .font-card .header .icons > a {
   color: initial;
 }
