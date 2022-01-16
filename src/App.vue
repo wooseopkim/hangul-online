@@ -22,6 +22,7 @@ import AppContent from './components/AppContent.vue'
 import AppBar from './components/AppBar.vue'
 import Modal from './components/Modal.vue'
 import SnackBar from './components/SnackBar.vue'
+import { reactive } from '@vue/reactivity'
 
 export default {
   components: {
@@ -33,10 +34,19 @@ export default {
   },
 
   data() {
+    const items: any[] = reactive([])
+    const store = reactive({
+      items,
+      onToggle: (item: any) => {
+        if (items.includes(item)) {
+          items.splice(items.indexOf(item), 1)
+        } else {
+          items.push(item)
+        }
+      }
+    })
     return {
-      store: {
-        items: []
-      },
+      store,
       eventBus: bus
     }
   },
