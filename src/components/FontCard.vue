@@ -12,23 +12,23 @@
           v-for="(typeface, index) in typefaces"
           @click="weightClick"
           :key="index"
-        >{{ typeface.weight }}<span class="ext">{{ ext(typeface.path).toUpperCase() }}</span>
+        >
+          {{ typeface.weight
+          }}<span class="ext">{{ ext(typeface.path).toUpperCase() }}</span>
         </li>
       </ul>
       <span class="icons">
-        <a
-          v-if="licenseURL"
-          :href="licenseURL"
-          target="_blank"
-        >
+        <a v-if="licenseURL" :href="licenseURL" target="_blank">
           <i class="material-icons">copyright</i>
         </a>
         <a :href="fontFilePath">
           <i class="material-icons">file_download</i>
         </a>
         <label>
-          <input type="checkbox">
-          <i class="material-icons" @click="toggle(model)">add_circle_outline</i>
+          <input type="checkbox" />
+          <i class="material-icons" @click="toggle(model)"
+            >add_circle_outline</i
+          >
         </label>
       </span>
     </div>
@@ -37,7 +37,13 @@
       class="editable"
       :class="editableClass"
       :style="editableStyle"
-    >{{ this.fontEnabled ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.' : '' }}</div>
+    >
+      {{
+        this.fontEnabled
+          ? '&nbsp;고통이 고통이라는 이유로 그 자체를 사랑하고 소유하려는 자는 없다.'
+          : ''
+      }}
+    </div>
   </section>
 </template>
 
@@ -53,25 +59,20 @@ const byte = 1
 const kb = 1000 * byte
 const mb = 1000 * kb
 const bytesToMegaBytes = (bytes, digits) => {
-  return parseInt(bytes / mb * (10 ** digits), 10) / (10 ** digits) + 'MB'
+  return parseInt((bytes / mb) * 10 ** digits, 10) / 10 ** digits + 'MB'
 }
 
 const timeout = 5 * 1000
 const delay = 1 * 1000
 
 export default {
-  props: [
-    'model',
-    'toggle'
-  ],
+  props: ['model', 'toggle'],
 
-  data () {
+  data() {
     const model = this.model
-    const typefaces = model.typefaces
-      .sort((a, b) => {
-        return (a.weight - b.weight) ||
-          b.path.localeCompare(a.path)
-      })
+    const typefaces = model.typefaces.sort((a, b) => {
+      return a.weight - b.weight || b.path.localeCompare(a.path)
+    })
     const slug = this.model.name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 
     return {
@@ -80,25 +81,26 @@ export default {
       name: model.name.ko,
       licenseURL: model.license.url,
       typefaces,
-      selectedFont: typefaces.find(typeface => typeface.weight === 400) || typefaces[0],
+      selectedFont:
+        typefaces.find((typeface) => typeface.weight === 400) || typefaces[0],
       fontSize: initialSize,
       fontEnabled: false
     }
   },
 
   computed: {
-    editable () {
+    editable() {
       return this.fontEnabled
     },
 
-    editableStyle () {
+    editableStyle() {
       return {
         fontSize: this.fontSize + unit,
         fontWeight: this.fontWeight
       }
     },
 
-    editableClass () {
+    editableClass() {
       const fontEnabled = this.fontEnabled
       return {
         [this.slug]: fontEnabled,
@@ -106,32 +108,32 @@ export default {
       }
     },
 
-    fontWeight () {
+    fontWeight() {
       return this.selectedFont ? this.selectedFont.weight : initialWeight
     },
 
-    fontFileSize () {
+    fontFileSize() {
       const sizeBytes = this.selectedFont.size
       const significantDigitCount = 1
       return bytesToMegaBytes(sizeBytes, significantDigitCount)
     },
 
-    fontFileFormat () {
+    fontFileFormat() {
       return this.selectedFont ? this.ext(this.selectedFont.path) : null
     },
 
-    fontFilePath () {
+    fontFilePath() {
       const font = this.selectedFont
       return font ? `static/fonts/${font.path}` : null
     }
   },
 
   methods: {
-    ext (path) {
+    ext(path) {
       return path.substring(path.lastIndexOf('.') + 1)
     },
 
-    loadFont () {
+    loadFont() {
       const enable = () => {
         this.fontEnabled = true
       }
@@ -140,7 +142,13 @@ export default {
           userAgent: window.navigator.userAgent,
           fontId: this.slug
         }
-        window.ga('send', 'event', 'error', 'font-loading', JSON.stringify(exception))
+        window.ga(
+          'send',
+          'event',
+          'error',
+          'font-loading',
+          JSON.stringify(exception)
+        )
         this.loadFont()
       }
 
@@ -152,33 +160,38 @@ export default {
         .then(enable, retry)
     },
 
-    reload (e) {
+    reload(e) {
       this.fontEnabled = false
       setTimeout(this.loadFont, delay)
     },
 
-    weightClick (e) {
-      const target = e.target.classList.contains('ext') ? e.target.parentNode : e.target
+    weightClick(e) {
+      const target = e.target.classList.contains('ext')
+        ? e.target.parentNode
+        : e.target
       const text = target.textContent
       const weight = parseInt(text, 10)
       const format = text.replace(weight.toString(), '')
-      this.selectedFont = this.typefaces
-        .find(typeface => {
-          return typeface.weight === weight &&
-              typeface.path.toLowerCase().endsWith(format.toLowerCase())
-        })
+      this.selectedFont = this.typefaces.find((typeface) => {
+        return (
+          typeface.weight === weight &&
+          typeface.path.toLowerCase().endsWith(format.toLowerCase())
+        )
+      })
       this.reload()
     },
 
-    twoDigit (n) {
+    twoDigit(n) {
       return `${n < 10 ? '0' : ''}${n}`
     }
   },
 
-  mounted () {
+  mounted() {
     const id = this.id
     inView(`#${id} .header`).once('enter', () => this.loadFont())
-    inView(`#${id}`).on('enter', () => window.ga('send', 'event', 'Interaction', 'view', `#${id}`))
+    inView(`#${id}`).on('enter', () =>
+      window.ga('send', 'event', 'Interaction', 'view', `#${id}`)
+    )
   }
 }
 </script>
@@ -243,7 +256,7 @@ export default {
 }
 
 .font-card .header:hover .dropdown .weight .ext {
-  background: #704FFF;
+  background: #704fff;
   color: white;
   padding: 0.1rem 0.2rem;
   font-size: 50%;
@@ -319,7 +332,7 @@ export default {
 }
 
 .font-card .header .icons > label > input:checked + i {
-  color: #FF01F3;
+  color: #ff01f3;
   /* `translate` === visual hack */
   transform: rotate(315deg) scale(1.05) translateX(-0.05rem) translateY(0.1rem);
 }
@@ -334,7 +347,7 @@ export default {
   .font-card .header .icons {
     display: block;
     float: initial;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
   }
 
   .font-card .editable {
@@ -354,10 +367,18 @@ export default {
 }
 
 @keyframes dots {
-  0%  { content: '로딩 중.'; }
-  33%  { content: '로딩 중..'; }
-  67%  { content: '로딩 중...'; }
-  100% { content: '로딩 중.'; }
+  0% {
+    content: '로딩 중.';
+  }
+  33% {
+    content: '로딩 중..';
+  }
+  67% {
+    content: '로딩 중...';
+  }
+  100% {
+    content: '로딩 중.';
+  }
 }
 
 .font-card .editable.failed::after {
@@ -399,7 +420,7 @@ export default {
   }
 }
 
-@media (min-width: 1080px) {  
+@media (min-width: 1080px) {
   .font-card .controls .indicator {
     margin-left: 30%;
   }

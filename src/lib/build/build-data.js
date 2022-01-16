@@ -11,17 +11,19 @@ const outFonts = []
 const outFontsPath = `${fontsRoot}/${fontDataFile}`
 
 fs.readdirSync(fontsRoot)
-  .filter(file => {
+  .filter((file) => {
     return fs.statSync(`${fontsRoot}/${file}`).isDirectory()
   })
-  .forEach(dir => {
-    const ff = fontFamily.fromJSON(fs.readFileSync(`${fontsRoot}/${dir}/${fontDataFile}`))
+  .forEach((dir) => {
+    const ff = fontFamily.fromJSON(
+      fs.readFileSync(`${fontsRoot}/${dir}/${fontDataFile}`)
+    )
 
     fs.readdirSync(`${fontsRoot}/${dir}`)
-      .filter(file => {
+      .filter((file) => {
         return file !== fontDataFile
       })
-      .forEach(file => {
+      .forEach((file) => {
         const basename = path.basename(file, path.extname(file))
         const weightName = basename.substring(basename.lastIndexOf('-') + 1)
         const weightValue = weight(weightName)
@@ -43,7 +45,7 @@ const cssRoot = `${assets}/css`
 const outCssPath = `${cssRoot}/${cssFile}`
 
 const outCss = outFonts
-  .map(fontFamily => generateCSS(fontFamily))
+  .map((fontFamily) => generateCSS(fontFamily))
   .join('\n\n')
 
 fs.writeFileSync(outCssPath, outCss)

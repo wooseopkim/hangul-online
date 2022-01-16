@@ -1,17 +1,15 @@
 <template>
   <div class="appbar">
-    <span class="text">{{ store.length }}개의 글꼴 선택</span>
+    <span class="text">{{ store.items.length }}개의 글꼴 선택</span>
     <label for="modal-switch">
       <i class="material-icons">code</i>
     </label>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
-  props: [
-    'store'
-  ]
+  props: ['store']
 }
 </script>
 

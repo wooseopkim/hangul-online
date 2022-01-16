@@ -1,6 +1,6 @@
 <template>
   <header class="masthead">
-    <h1>한글<br>온라인</h1>
+    <h1>한글<br />온라인</h1>
     <p>너와 나의 한글 글꼴</p>
 
     <ul class="social-buttons">
@@ -15,12 +15,15 @@
           class="symbol"
           target="_blank"
           :href="socialButton.url + location"
-          :style="{color: socialButton.color}"
-        >{{ socialButton.symbol  }}</a>
+          :style="{ color: socialButton.color }"
+          >{{ socialButton.symbol }}</a
+        >
       </li>
     </ul>
 
-    <p id="copyright">(C) <a href="https://blog.wooseop.kim/">Wooseop Kim</a> {{ period }}</p>
+    <p id="copyright">
+      (C) <a href="https://blog.wooseop.kim/">Wooseop Kim</a> {{ period }}
+    </p>
   </header>
 </template>
 
@@ -30,7 +33,7 @@ const now = new Date().getFullYear()
 const period = `${start}${start >= now ? '' : `-${now}`}`
 
 export default {
-  data () {
+  data() {
     return {
       period,
       location: window.location.href,
@@ -74,8 +77,12 @@ export default {
     }
   },
 
-  mounted () {
-    if (!/Android|iP([ao]d|hone)|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  mounted() {
+    if (
+      !/Android|iP([ao]d|hone)|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
       return
     }
 
@@ -90,7 +97,8 @@ export default {
       objectType: 'feed',
       content: {
         title: document.title,
-        description: document.querySelector('meta[property="og:description"]').content,
+        description: document.querySelector('meta[property="og:description"]')
+          .content,
         imageUrl: document.querySelector('meta[property="og:image"]').content,
         link: {
           mobileWebUrl: window.location.href,
@@ -141,25 +149,25 @@ export default {
 
 @keyframes glitter {
   0% {
-    color: #30226D;
+    color: #30226d;
   }
 
   10% {
-    color: #30226D;
+    color: #30226d;
   }
-  
+
   80% {
-    color: #704FFF;
+    color: #704fff;
   }
 
   100% {
-    color: #704FFF;
+    color: #704fff;
   }
 }
 
 .masthead > p {
   margin-top: 10%;
-  margin-bottom: 10%; 
+  margin-bottom: 10%;
   font-size: 1rem;
 }
 

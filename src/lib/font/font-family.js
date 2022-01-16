@@ -5,7 +5,7 @@
 // this.typefaces: Map<string, Font>
 
 export default {
-  fromJSON: json => {
+  fromJSON: (json) => {
     json = JSON.parse(json.toString())
     return {
       name: {

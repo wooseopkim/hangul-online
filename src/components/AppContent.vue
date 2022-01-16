@@ -12,22 +12,18 @@
 
 <script>
 import fonts from '../assets/fonts/data.json'
-import FontCard from './font-card'
+import FontCard from './FontCard.vue'
 
 export default {
-  props: [
-    'store'
-  ],
+  props: ['store'],
 
   components: {
     FontCard
   },
 
-  data () {
+  data() {
     const toggle = (item) => {
-      this.store.includes(item)
-          ? this.store.splice(this.store.indexOf(item), 1)
-          : this.store.push(item)
+      this.store.onToggle(item)
     }
 
     return {

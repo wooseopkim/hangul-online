@@ -1,20 +1,22 @@
 <template>
   <div class="modal-wrapper">
-    <input id="modal-switch" type="checkbox" @change="onModalChange($event)">
+    <input id="modal-switch" type="checkbox" @change="onModalChange($event)" />
     <div class="modal-container">
       <label for="modal-switch" class="background"></label>
       <div class="modal">
         <ul class="tabs">
           <li class="tab" v-for="(tab, index) in tabs" :key="index">
             <input
-                :id="tab.component.title"
-                class="tab-switch"
-                type="radio"
-                name="tabs"
-                :checked="index === initialTab"
-                @change="setCurrentIndex(index)"
-            >
-            <label :for="tab.component.title" class="tab-title">{{ tab.component.title }}</label>
+              :id="tab.component.title"
+              class="tab-switch"
+              type="radio"
+              name="tabs"
+              :checked="index === initialTab"
+              @change="setCurrentIndex(index)"
+            />
+            <label :for="tab.component.title" class="tab-title">{{
+              tab.component.title
+            }}</label>
           </li>
         </ul>
 
@@ -28,14 +30,8 @@
         </div>
       </div>
 
-      <div
-        class="fab-container"
-        v-show="hasCode"
-      >
-        <button
-          class="fab"
-          @click="copyCSS"
-        >
+      <div class="fab-container" v-show="hasCode">
+        <button class="fab" @click="copyCSS">
           <i class="material-icons">content_copy</i>
         </button>
       </div>
@@ -46,22 +42,20 @@
 <script>
 import { generateCSS } from '../lib/stylesheet'
 
-import TabCSS from './tab-css'
-import TabUsage from './tab-usage'
+import TabCSS from './TabCss.vue'
+import TabUsage from './TabUsage.vue'
 
 const { hostname, port } = window.location
 const hostUrl = port ? `//${hostname}:${port}` : `//${hostname}`
 
 export default {
-  props: [
-    'store',
-    'event-bus'
-  ],
+  props: ['store', 'event-bus'],
 
-  data () {
+  data() {
     const meta = {
       store: this.store,
-      code: () => this.store.map(item => generateCSS(item, hostUrl)).join('\n\n'),
+      code: () =>
+        this.store.items.map((item) => generateCSS(item, hostUrl)).join('\n\n'),
       hasCode: () => this.hasCode
     }
 
@@ -84,18 +78,18 @@ export default {
   },
 
   computed: {
-    hasCode () {
-      return this.store.length
+    hasCode() {
+      return this.store.items.length
     }
   },
 
   methods: {
-    onModalChange (e) {
+    onModalChange(e) {
       const on = e.target.checked
       document.body.style.overflow = on ? 'hidden' : 'initial'
     },
 
-    setCurrentIndex (index) {
+    setCurrentIndex(index) {
       const tabs = document.querySelectorAll('.tab-content > *')
       const previousTab = tabs[this.currentIndex]
 
@@ -107,9 +101,9 @@ export default {
       currentTab.classList.add('current')
     },
 
-    copyCSS () {
+    copyCSS() {
       const tabs = this.tabs
-      const cssTab = tabs.findIndex(tab => tab.component === TabCSS)
+      const cssTab = tabs.findIndex((tab) => tab.component === TabCSS)
       if (this.currentIndex !== cssTab) {
         document.getElementById(tabs[cssTab].component.name).checked = true
         this.setCurrentIndex(cssTab)
@@ -126,10 +120,10 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.setCurrentIndex(this.initialTab)
 
-    document.addEventListener('keyup', e => {
+    document.addEventListener('keyup', (e) => {
       const code = e.keyCode || e.which
       if (code !== 8 && code !== 27) {
         return
@@ -189,7 +183,7 @@ export default {
 .modal-container .fab {
   flex: 1;
   transform: translateX(-2rem) translateY(calc(-100% - 2rem));
-  background: #BE3DFF;
+  background: #be3dff;
   max-width: 4rem;
   height: 4rem;
   outline: none;
@@ -310,7 +304,7 @@ export default {
 }
 
 .tab-switch:checked ~ .tab-title {
-  border-bottom: 0.2rem solid #BE3DFF;
+  border-bottom: 0.2rem solid #be3dff;
   font-weight: 700;
 }
 

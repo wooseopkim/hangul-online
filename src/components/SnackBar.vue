@@ -1,19 +1,14 @@
 <template>
-  <div
-    class="snackbar"
-    :class="{ shown }"
-  >{{ msg }}</div>
+  <div class="snackbar" :class="{ shown }">{{ msg }}</div>
 </template>
 
 <script>
 const ttl = 2000
 
 export default {
-  props: [
-    'event-bus'
-  ],
+  props: ['event-bus'],
 
-  data () {
+  data() {
     return {
       msg: 0,
       shown: false
@@ -21,7 +16,7 @@ export default {
   },
 
   methods: {
-    show (msg) {
+    show(msg) {
       const id = this.id
       if (id) {
         clearTimeout(id)
@@ -35,8 +30,8 @@ export default {
     }
   },
 
-  created () {
-    this.eventBus.$on('snackbar', msg => this.show(msg))
+  created() {
+    this.eventBus.$on('snackbar', (msg) => this.show(msg))
   }
 }
 </script>
