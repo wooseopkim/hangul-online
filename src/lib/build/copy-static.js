@@ -1,7 +1,10 @@
-import { ncp } from 'ncp'
+import * as ncp from 'ncp'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 const stop = (err) => {
   if (err) throw err
 }
-ncp('../../assets/fonts', '../../../public/static/fonts', stop)
-ncp('../../assets/css', '../../../public/static/css', stop)
+ncp.default(`${dirname}/../../assets/fonts`, `${dirname}/../../../public/static/fonts`, stop)
+ncp.default(`${dirname}/../../assets/css`, `${dirname}/../../../public/static/css`, stop)

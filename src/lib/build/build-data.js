@@ -1,9 +1,11 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { fontFamily, weight } from '../font'
 import { generateCSS } from '../stylesheet'
 
-const assets = '../../assets'
+const dirname = path.dirname(fileURLToPath(import.meta.url))
+const assets = `${dirname}/../../assets`
 
 const fontDataFile = 'data.json'
 const fontsRoot = `${assets}/fonts`
