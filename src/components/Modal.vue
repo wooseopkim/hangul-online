@@ -103,7 +103,7 @@ export default {
 
     copyCSS() {
       const tabs = this.tabs
-      const cssTab = tabs.findIndex((tab) => tab.component === TabCSS)
+      const cssTab = tabs.findIndex((tab) => tab.component.name === TabCSS.name)
       if (this.currentIndex !== cssTab) {
         document.getElementById(tabs[cssTab].component.name).checked = true
         this.setCurrentIndex(cssTab)
