@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import fonts from '../assets/fonts/data.json'
+import fonts from '../../public/static/fonts/data.json'
 import FontCard from './FontCard.vue'
 
 export default {

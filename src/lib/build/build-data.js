@@ -5,10 +5,10 @@ import { fontFamily, weight } from '../font'
 import { generateCSS } from '../stylesheet'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
-const assets = `${dirname}/../../assets`
+const staticDir = `${dirname}/../../../public/static`
 
 const fontDataFile = 'data.json'
-const fontsRoot = `${assets}/fonts`
+const fontsRoot = `${staticDir}/fonts`
 const outFonts = []
 const outFontsPath = `${fontsRoot}/${fontDataFile}`
 
@@ -43,7 +43,7 @@ fs.readdirSync(fontsRoot)
 fs.writeFileSync(outFontsPath, JSON.stringify(outFonts, null, 2))
 
 const cssFile = 'fonts.css'
-const cssRoot = `${assets}/css`
+const cssRoot = `${staticDir}/css`
 const outCssPath = `${cssRoot}/${cssFile}`
 
 const outCss = outFonts

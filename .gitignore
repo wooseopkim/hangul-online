@@ -22,7 +22,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-public/static/fonts/
-public/static/css/
-src/assets/css/fonts.css
-src/assets/fonts/data.json
+public/static/fonts/data.json
+public/static/css/fonts.css
