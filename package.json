@@ -4,7 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "clean": "git clean -dfx public/",
+    "prepare": "npm run clean && node --experimental-specifier-resolution=node src/lib/build/build-data.js && node --experimental-specifier-resolution=node src/lib/build/copy-static.js",
+    "preserve": "npm run prepare",
     "serve": "vue-cli-service serve",
+    "prebuild": "npm run prepare",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
