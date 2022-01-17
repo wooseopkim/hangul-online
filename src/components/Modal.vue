@@ -103,7 +103,7 @@ export default {
 
     copyCSS() {
       const tabs = this.tabs
-      const cssTab = tabs.findIndex((tab) => tab.component === TabCSS)
+      const cssTab = tabs.findIndex((tab) => tab.component.name === TabCSS.name)
       if (this.currentIndex !== cssTab) {
         document.getElementById(tabs[cssTab].component.name).checked = true
         this.setCurrentIndex(cssTab)
@@ -193,6 +193,8 @@ export default {
   cursor: pointer;
   color: white;
   display: flex;
+  justify-content: center;
+  align-items: center;
   user-select: none;
 }
 
@@ -221,12 +223,6 @@ export default {
 #modal-switch:not(:checked) ~ .modal-container {
   visibility: hidden;
   opacity: 0;
-}
-
-@media (min-width: 1024px) {
-  .modal {
-    max-width: 80rem;
-  }
 }
 
 #modal-switch:checked ~ .modal-container .modal {
