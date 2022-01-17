@@ -24,3 +24,5 @@ pnpm-debug.log*
 
 public/static/fonts/
 public/static/css/
+src/assets/css/fonts.css
+src/assets/fonts/data.json
