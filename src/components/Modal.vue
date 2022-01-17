@@ -193,6 +193,8 @@ export default {
   cursor: pointer;
   color: white;
   display: flex;
+  justify-content: center;
+  align-items: center;
   user-select: none;
 }
 
@@ -221,12 +223,6 @@ export default {
 #modal-switch:not(:checked) ~ .modal-container {
   visibility: hidden;
   opacity: 0;
-}
-
-@media (min-width: 1024px) {
-  .modal {
-    max-width: 80rem;
-  }
 }
 
 #modal-switch:checked ~ .modal-container .modal {
