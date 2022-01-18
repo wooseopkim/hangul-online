@@ -1,4 +1,0 @@
-build/*.js
-config/*.js
-*.bundle.js
-*.config.js

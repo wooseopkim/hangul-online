@@ -1,15 +1,13 @@
 <template>
-  <div id="app">
-    <app-header></app-header>
-    <app-content :store="store"></app-content>
-    <app-bar :store="store"></app-bar>
-    <snackbar :event-bus="eventBus"></snackbar>
-    <modal :store="store" :event-bus="eventBus"></modal>
-  </div>
+  <AppHeader></AppHeader>
+  <AppContent :store="store"></AppContent>
+  <AppBar :store="store"></AppBar>
+  <SnackBar :event-bus="eventBus"></SnackBar>
+  <Modal :store="store" :event-bus="eventBus"></Modal>
 </template>
 
-<script>
-import Vue from 'vue'
+<script lang="ts">
+import bus from './lib/event/bus'
 import FontFaceObserver from 'fontfaceobserver'
 
 const enable = () => document.body.classList.add('font-loaded')
@@ -19,11 +17,12 @@ new FontFaceObserver('Spoqa Han Sans Subset')
   .load(null, timeout)
   .then(enable, enableAnyway)
 
-import AppHeader from './components/app-header'
-import AppContent from './components/app-content'
-import AppBar from './components/app-bar'
-import Modal from './components/modal'
-import Snackbar from './components/snackbar'
+import AppHeader from './components/AppHeader.vue'
+import AppContent from './components/AppContent.vue'
+import AppBar from './components/AppBar.vue'
+import Modal from './components/Modal.vue'
+import SnackBar from './components/SnackBar.vue'
+import { reactive } from '@vue/reactivity'
 
 export default {
   components: {
@@ -31,23 +30,43 @@ export default {
     AppContent,
     AppBar,
     Modal,
-    Snackbar
+    SnackBar
   },
 
-  data () {
+  data() {
+    const items: any[] = reactive([])
+    const store = reactive({
+      items,
+      onToggle: (item: any) => {
+        if (items.includes(item)) {
+          items.splice(items.indexOf(item), 1)
+        } else {
+          items.push(item)
+        }
+      }
+    })
     return {
-      store: [],
-      eventBus: new Vue()
+      store,
+      eventBus: bus
     }
   },
 
-  mounted () {
+  mounted() {
     const outerLinkSelector = 'a[href]:not([href^="#"]):not([href^=javascript])'
-    Array.prototype.forEach.call(document.querySelectorAll(outerLinkSelector), link => {
-      link.addEventListener('click', e => {
-        window.ga('send', 'event', 'Interaction', 'link', e.target.href)
-      })
-    })
+    Array.prototype.forEach.call(
+      document.querySelectorAll(outerLinkSelector),
+      (link) => {
+        link.addEventListener('click', (e: any) => {
+          ;(window as any).ga(
+            'send',
+            'event',
+            'Interaction',
+            'link',
+            e.target.href
+          )
+        })
+      }
+    )
   }
 }
 </script>
@@ -61,27 +80,28 @@ export default {
 }
 
 .font-loaded {
-  font-family: "Spoqa Han Sans Subset", sans-serif;
+  font-family: 'Spoqa Han Sans Subset', sans-serif;
 }
 
 input {
   border: none;
 }
 
-input:focus, [contenteditable=true]:focus {
+input:focus,
+[contenteditable='true']:focus {
   outline: none;
 }
 
-input[type=range] {
+input[type='range'] {
   -webkit-appearance: none;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+input[type='range']::-webkit-slider-runnable-track {
   height: 1px;
   background: black;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: 1px solid black;
   height: 1em;
@@ -92,12 +112,12 @@ input[type=range]::-webkit-slider-thumb {
   transform: translateY(-50%);
 }
 
-input[type=range]::-moz-range-track {
+input[type='range']::-moz-range-track {
   height: 1px;
   background: black;
 }
 
-input[type=range]::-moz-range-thumb {
+input[type='range']::-moz-range-thumb {
   border: 1px solid black;
   height: 1em;
   width: 1em;
@@ -106,22 +126,22 @@ input[type=range]::-moz-range-thumb {
   cursor: pointer;
 }
 
-input[type=range]::-ms-track {
+input[type='range']::-ms-track {
   height: 1px;
   background: transparent;
   border-color: transparent;
   color: transparent;
 }
 
-input[type=range]::-ms-fill-lower {
+input[type='range']::-ms-fill-lower {
   background: black;
 }
 
-input[type=range]::-ms-fill-upper {
+input[type='range']::-ms-fill-upper {
   background: black;
 }
 
-input[type=range]::-ms-thumb {
+input[type='range']::-ms-thumb {
   border: 1px solid black;
   height: 1em;
   width: 1em;
@@ -135,4 +155,3 @@ input[type=range]::-ms-thumb {
   letter-spacing: -0.1em;
 }
 </style>
-

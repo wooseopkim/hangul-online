@@ -3,7 +3,7 @@
 // this.weight: Map<string, Number> => Tuple<string, Number>
 
 export default {
-  fromJSON: json => {
+  fromJSON: (json) => {
     if (typeof json === 'string') {
       json = JSON.parse(json)
     }

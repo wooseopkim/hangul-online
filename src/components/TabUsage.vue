@@ -17,18 +17,16 @@ import { parse } from 'marked'
 export default {
   title: '사용법',
 
-  props: [
-    'meta'
-  ],
+  props: ['meta'],
 
   methods: {
-    marked () {
+    marked() {
       return parse(...arguments)
     }
   },
 
   computed: {
-    steps () {
+    steps() {
       return [
         `복사한 코드를 \`<head>\` 태그에 추가합니다.
         
@@ -92,17 +90,21 @@ observer.load(null, timeout).then(function () {
   line-height: 1.4;
 }
 
-.tab-usage code, pre, blockquote {
+.tab-usage code,
+pre,
+blockquote {
   background: lightgrey;
 }
 
-.tab-usage pre, blockquote {
+.tab-usage pre,
+blockquote {
   margin: 0.2rem 0rem;
   padding: 0.5rem 1rem;
 }
 
 @media (max-width: 640px) {
-  .tab-usage pre, blockquote {
+  .tab-usage pre,
+  blockquote {
     margin-left: -2rem;
     margin-right: -2rem;
   }
@@ -131,7 +133,7 @@ observer.load(null, timeout).then(function () {
 
 .tab-usage a {
   text-decoration: none;
-  border-bottom: 1px dotted #BE3DFF;
+  border-bottom: 1px dotted #be3dff;
   padding-bottom: 1px;
 }
 
